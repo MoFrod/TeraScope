@@ -3,28 +3,95 @@ title: "CSC8634_TeraScope Report"
 author: "Morgan Frodsham (210431461)"
 date: "10/01/2022"
 output: pdf_document
+citation_package: natbib
+bibliography: "references.bib"
+biblio-style: "apalike"
+link-citations: TRUE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir= normalizePath('..'))
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r ProjectTemplate, include = FALSE}
+library(ProjectTemplate)
+load.project()
 ```
 
-## Including Plots
+#Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
 
-You can also embed plots, for example:
+##Business Understanding
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+###Background
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Newcastle University has created a scalable architecture for cloud-based visualisation of data collected by the Newcaslte Urban Observatory; they have demonstrated it is feasible to produce a high quality terapixel visualisation using a path tracing renderer in under a day with public IaaS cloud GPU nodes (@TeraScope). This project sits at the intersection of Data Science, Cloud Computing, and performance evaluation research, and focuses on the performance evaluation for a computation of a terapixel visualisation of the city of Newcastle upon Tyne and its environmental data. 
+
+[Insert wider context from reading]
+
+###Business Objectives and Successs Criteria
+
+
+
+###Data Mining Goals
+
+Which event types dominate task runtimes?
+What is the interplay between GPU temperature and performance?
+What is the interplay between increased power draw and render time?
+Can we quantify the variation in computation requirements for particular tiles?
+Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards).
+What can we learn about the efficiency of the task scheduling process?
+
+###Benefits 
+
+Include resources, requirement, risks, terminology, cost and benefits
+
+###Plan 
+
+Include plan plus initial assessment of tools and techniques
+
+##Data Understanding
+
+###Collect Inital Data
+
+Newcastle University has provided three data sets created from application checkpoint and system metric output for the production of a terapixel image (@TeraScope).
+
+###Describe Data
+
+
+###Explore Data
+
+
+###Verify Data Quality 
+
+
+
+##Data Preparation
+
+###Select Data
+
+
+###Clean Data
+
+
+###COnstruct Data
+
+
+###Integrate Data
+
+
+###Format Data
+
+##Modeling
+
+##Evaluation
+
+###Evaluate Results
+
+
+###Review Process
+
+
+###Determine Next Steps
+
+#Deployment
