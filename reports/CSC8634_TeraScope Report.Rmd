@@ -19,29 +19,36 @@ library(ProjectTemplate)
 load.project()
 ```
 
-#Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
+# Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
 
-##Business Understanding
+- what is the need for the project?
+- justify your choice of response (i.e. the nature of, and plan for your project). To give strength to your argument, you should reference practice elsewhere (e.g. in academic literature or industry practices)
+- What, concisely, did you do?
+- How successful has it been? Provide evidence sing appropriate evaluation methodologies, and comment on the strengths/weaknesses of your evidence in answering this question.
+- What are the future implications for work in this area? If applicable, which areas of extension work are now possible due to the foundational work you have performed in this project?
+- A brief relfection on your personal and professional learning in undertaking this project. Here you can comment on how you found the process, what you learned about the technologies and methodologies you used, which aspects you found most difficult/straightforward, and any conclusions which will inform the way you undertake similar projects in future. 
 
-###Background
+## Introduction
 
-Newcastle University has created a scalable architecture for cloud-based visualisation of data collected by the Newcaslte Urban Observatory; they have demonstrated it is feasible to produce a high quality terapixel visualisation using a path tracing renderer in under a day with public IaaS cloud GPU nodes (@TeraScope). This project sits at the intersection of Data Science, Cloud Computing, and performance evaluation research, and focuses on the performance evaluation for a computation of a terapixel visualisation of the city of Newcastle upon Tyne and its environmental data. 
+Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories" in understanding how cities operate (@UO). Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels(@TeraScope), which are images containing over one trillion pixels that allow the user to zoom into incredible detail (@Terapixel).
 
-[Insert wider context from reading]
+## Purpose
 
-###Business Objectives and Successs Criteria
+There is significant computational cost to producing a high quality terapixel image (@Terapixel); Newcastle University's supercomputer architecture for scalable visualisation, however, allows the institution to only pay for what is needed while producing terapixel viusalisations that support daily updates and undertaking rigorous evaluation (@TeraScope). This project uses a dataset created from the production of a terapixel image by this architecture, and aims to provide useful insights into the computation performance. The data set was created during a run using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@TeraScope).
+
 
 
 
 ###Data Mining Goals
 
-Which event types dominate task runtimes?
+Which event types dominate task runtimes? - execution time if often the best metric for accessing comuter performance (Hoefler)
 What is the interplay between GPU temperature and performance?
 What is the interplay between increased power draw and render time?
 Can we quantify the variation in computation requirements for particular tiles?
 Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards).
 What can we learn about the efficiency of the task scheduling process?
 
+- we should see efficientl linear scalaing as we add more compute notdes - gustafosn-Baris' law @terapixel Rendering images is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource, following Gustafson-Barsis' law that the problem size scales to fill the compute capacity (@Terapixel).  
 ###Benefits 
 
 Include resources, requirement, risks, terminology, cost and benefits
@@ -95,3 +102,7 @@ Newcastle University has provided three data sets created from application check
 ###Determine Next Steps
 
 #Deployment
+
+\newpage
+
+# Bibliography

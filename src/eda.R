@@ -1,14 +1,11 @@
 # Count how many unique hosts there are
-host_counts <- AC1 %>%
+hosts <- AC1 %>%
   group_by(hostname) %>%
   summarise (n_distinct(hostname)) %>%
   count() %>%
   print() # Hosts must be the GPU node, as we know there are 1024
 
-# Calculate runtime
-runtime <- AC1 %>%
-  group_by(eventName, eventType) %>%
-  grep(TotalRender
+
        
        
 AC1 %>%
