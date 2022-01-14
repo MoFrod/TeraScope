@@ -5,15 +5,10 @@ hosts <- AC1 %>%
   count() %>%
   print() # Hosts must be the GPU node, as we know there are 1024
 
+# Quickplot 
+       
+       
 
-       
-       
-AC1 %>%
-  group_by(hostname, eventName) %>%
-  distinct(timestamp)%>%
-  arrange(timestamp) %>%
-  mutate(runtime = c(NA, diff(timestamp))) %>%
-         print()
        
        
        # Combine enrolments data for cs course into cyber_security_full_enrolments

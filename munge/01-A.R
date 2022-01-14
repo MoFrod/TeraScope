@@ -1,12 +1,19 @@
-# Create a data set of application checkpoints for initial investigation
-AC1 <- as_tibble(application.checkpoints)
-
+# Create a data set of application checkpoints for initial investigation grouped by hostname and arranged by timestamp
+AC1 <- as_tibble(application.checkpoints) %>%
+  group_by(hostname, eventName) %>%
+  arrange(timestamp, .by_group = TRUE)
+  
 # Remove the non-numeric characters from the timestamp column in AC1
-AC1$timestamp <- gsub("T", "", AC1$timestamp) %>%
-  str_replace("Z", "")
+AC1$timestamp <- gsub("2018-11-08T", "", AC1$timestamp) %>% 
+  str_replace("Z", "") # Removed year, date and alphabetic characters as they're all the same across all 660400 rows.
+
+# Create separate columns for start and stop
+#AC2 <- filter(AC1$eventType, "START")
+
+# AC2 <- pivot_wider(AC1, )
 
 # Convert timestamp values to date/time
-as_datetime(AC1$timestamp)
+# as_datetime(AC1$timestamp)
 
 
 # Create a new column in AC1 called "runtime"
