@@ -5,13 +5,50 @@ hosts <- AC1 %>%
   count() %>%
   print() # Hosts must be the GPU node, as we know there are 1024
 
-# Quickplot 
-       
+# Are there more GPU serials then hosts?
+ghosts <- GPU1 %>%
+  group_by(hostname) %>%
+  summarise (n_distinct(hostname)) %>%
+  count() %>%
+  print() # Hosts must be the GPU node, as we know there are 1024
+gserials <- GPU1 %>%
+  group_by(gpuSerial) %>%
+  summarise(n_distinct(gpuSerial)) %>%
+  count() %>%
+  print() # Each virtual machine has one GPU card
+
+# Check whether the timestamps across AC1 and GPU are the same
+all(AC1$timestamp %in% GPU1$timestamp)
+
+# Plot sameset of GPU temperature, memory and core utilisation.
+GPU1 %>% slice(2000:2010) %>%
+  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "black") + geom_line(aes(y = gpuUtilPerc), colour = "red") + geom_line(aes(y = gpuMemUtilPerc), colour = "blue")
+
+# Smaller subset of data for investigation
+AC2 <- AC1 %>% head (1000) %>%
+write.csv(smaller_subset, "subset.csv") #Copy for Matt support
+
+#Select one virtual machine) for investigation to test how to investigate
+AC2 <- AC1 %>%
+  filter(hostname == "04dc4e9647154250beeee51b866b0715000000") %>%
+  filter(timestamp >= "2018-11-08 07:43:00", timestamp <= "2018-11-08 07:50:00") 
+GPU2 <- GPU1 %>%
+  filter(hostname == "04dc4e9647154250beeee51b866b0715000000") %>%
+  filter(timestamp >= "2018-11-08 07:41:45", timestamp <= "2018-11-08 07:46:28") 
+
+
+  #%>%
+# AC1 %>%
+  mutate(number = row_number()) %>%
+  ungroup() %>%
+  pivot_wider(id_cols = taskId, names_from = number, values_from = c(eventName, eventType, timestamp, hostname, jobId, taskId), names_glue = "{.value}_{number}")
        
 
        
        
-       # Combine enrolments data for cs course into cyber_security_full_enrolments
+       #  ggplot(aes(x = num_true, y = n, fill = highest_education_level)) + geom_bar(stat="identity", position="dodge") + scale_fill_brewer(palette = "PuOr") + labs(title = "Number of Demographic Fields by Number of Learners per Education", x = "Number of Demographic Data Fields Provided by Learner", y = "Number of Learners", fill = "Education Level"
+
+# Combine enrolments data for cs course into cyber_security_full_enrolments
        full_enrolments <- rbind(cyber.security.1_enrolments, cyber.security.2_enrolments, cyber.security.3_enrolments, cyber.security.4_enrolments, cyber.security.5_enrolments, cyber.security.6_enrolments, cyber.security.7_enrolments)
        
        # Show empty cells as NA
