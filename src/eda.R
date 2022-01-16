@@ -22,11 +22,11 @@ all(AC1$timestamp %in% GPU1$timestamp)
 
 # Plot sameset of GPU temperature, memory and core utilisation.
 GPU1 %>% slice(2000:2010) %>%
-  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "black") + geom_line(aes(y = gpuUtilPerc), colour = "red") + geom_line(aes(y = gpuMemUtilPerc), colour = "blue")
+  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "#b2df8a", size = 2) + geom_line(aes(y = gpuUtilPerc), colour = "#1f78b4", size = 2) + geom_line(aes(y = gpuMemUtilPerc), colour = "#a6cee3", size = 2) + scale_colour_brewer(palette = "Paired")
 
 # Smaller subset of data for investigation
-AC2 <- AC1 %>% head (1000) %>%
-write.csv(smaller_subset, "subset.csv") #Copy for Matt support
+AC3 <- AC1 %>% head (1000) %>%
+write.csv(AC3, "AC3.csv") #Copy for Matt support
 
 #Select one virtual machine) for investigation to test how to investigate
 AC2 <- AC1 %>%

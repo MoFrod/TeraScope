@@ -5,16 +5,23 @@ AC1 <- as_tibble(application.checkpoints) %>%
   
 # Remove the non-numeric characters from the timestamp column in AC1
 AC1$timestamp <- gsub("T", "", AC1$timestamp) %>% 
-  str_replace("Z", "") # Removed year, date and alphabetic characters as they're all the same across all 660400 rows.
-
-# Make timestamp column date/time
-AC1$timestamp <- as_datetime(AC1$timestamp, tz = "Europe/London")
+  str_replace("Z", "") # Removed alphabetic characters as they're all the same across all 660400 rows
 
 # Move START and STOP to be columns per row to create a 'duration' variable showing times
 AC2 <- AC1 %>%
   pivot_wider(names_from = eventType, # These are what we would like to have as the column names in the wider-but-shorter dataframe
-  values_from = timestamp) # Fill those columsn with the timestamp value
+  values_from = timestamp) # Fill those columns with the timestamp value
 
+# Make START/STOP columns date/time
+AC2 <- AC2 %>%
+  mutate(START = parse_date_time(START, orders = c("ymd HMS")))
+AC2 <- AC2 %>%
+  mutate(STOP = parse_date_time(STOP, orders = c("ymd HMS"))) 
+
+# Create a duration column for AC2 to calculate runtime
+AC2 <- AC2 %>%
+  mutate(duration = STOP - START)
+  
 # Create a data set of gpu for initial investigation grouped by hostname and arranged by timestamp
 GPU1 <- as_tibble(gpu) %>%
   group_by(hostname) %>%
