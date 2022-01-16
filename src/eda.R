@@ -20,13 +20,9 @@ gserials <- GPU1 %>%
 # Check whether the timestamps across AC1 and GPU are the same
 all(AC1$timestamp %in% GPU1$timestamp)
 
-# Plot sameset of GPU temperature, memory and core utilisation.
-GPU1 %>% slice(2000:2010) %>%
-  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "#b2df8a", size = 2) + geom_line(aes(y = gpuUtilPerc), colour = "#1f78b4", size = 2) + geom_line(aes(y = gpuMemUtilPerc), colour = "#a6cee3", size = 2) + scale_colour_brewer(palette = "Paired")
-
 # Smaller subset of data for investigation
-AC3 <- AC1 %>% head (1000) %>%
-write.csv(AC3, "AC3.csv") #Copy for Matt support
+sub-set <- AC1 %>% head (1000) %>%
+write.csv(sub-set, "subset.csv") #Copy for Matt support
 
 #Select one virtual machine) for investigation to test how to investigate
 AC2 <- AC1 %>%
@@ -36,6 +32,13 @@ GPU2 <- GPU1 %>%
   filter(hostname == "04dc4e9647154250beeee51b866b0715000000") %>%
   filter(timestamp >= "2018-11-08 07:41:45", timestamp <= "2018-11-08 07:46:28") 
 
+# Plot same set of GPU temperature, memory and core utilisation.
+GPU1 %>% slice(2000:2010) %>%
+  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "#b2df8a", size = 2) + geom_line(aes(y = gpuUtilPerc), colour = "#1f78b4", size = 2) + geom_line(aes(y = gpuMemUtilPerc), colour = "#a6cee3", size = 2) + scale_colour_brewer(palette = "Paired")
+
+# Plot duration of events
+AC2 %>% head(50) %>%
+  ggplot(aes(x = START)) + geom_line(aes(y = duration), colour = "#33a02c", size = 1)
 
   #%>%
 # AC1 %>%

@@ -21,6 +21,7 @@ AC2 <- AC2 %>%
 # Create a duration column for AC2 to calculate runtime
 AC2 <- AC2 %>%
   mutate(duration = STOP - START)
+
   
 # Create a data set of gpu for initial investigation grouped by hostname and arranged by timestamp
 GPU1 <- as_tibble(gpu) %>%
