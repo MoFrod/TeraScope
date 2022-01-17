@@ -11,14 +11,17 @@ ghosts <- GPU1 %>%
   summarise (n_distinct(hostname)) %>%
   count() %>%
   print() # Hosts must be the GPU node, as we know there are 1024
+
 gserials <- GPU1 %>%
   group_by(gpuSerial) %>%
   summarise(n_distinct(gpuSerial)) %>%
   count() %>%
   print() # Each virtual machine has one GPU card
 
-# Check whether the timestamps across AC1 and GPU are the same
+# Check whether the timestamps across AC1 and GPU1 are the same
 all(AC1$timestamp %in% GPU1$timestamp)
+
+# Check whether the hostnames across AC1 and GPU1
 
 # Smaller subset of data for investigation
 sub-set <- AC1 %>% head (1000) %>%
@@ -39,6 +42,36 @@ GPU1 %>% slice(2000:2010) %>%
 # Plot duration of events
 AC2 %>% head(50) %>%
   ggplot(aes(x = START)) + geom_line(aes(y = duration), colour = "#33a02c", size = 1)
+
+# Plot duration of eventName activities
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot()
+
+# Remove Total Render from results
+AC3 <- AC2 %>%
+  filter(eventName != "TotalRender")
+
+# Plot duration of eventName activities without total render
+ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot()
+
+# Remove Render from results
+AC4 <- AC3 %>%
+  filter(eventName != "Render")
+
+# Plot duration of eventName activities without render
+ggplot(AC4, aes(x = eventName, y = duration)) + geom_boxplot()
+
+# Remove Uploading from results
+AC5 <- AC4 %>%
+  filter(eventName != "Uploading")
+
+# Plot duration of eventName activities without uploading
+ggplot(AC5, aes(x = eventName, y = duration)) + geom_boxplot()
+
+# How many times rendering happens (is this the same as hostname?)
+R <- AC2 %>%
+  filter(eventName == "Render") %>%
+  count()
+
 
   #%>%
 # AC1 %>%

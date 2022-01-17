@@ -22,7 +22,27 @@ AC2 <- AC2 %>%
 AC2 <- AC2 %>%
   mutate(duration = STOP - START)
 
+# Round duration in AC2
+AC2$duration <- AC2$duration %>%
+  as.numeric() %>%
+  round(., digits = 1)
+ 
+# create time bucket to compare event (confirm timestamp is in correct order, and then do for GPU spreadsheet, then merge on timestamp)
+DF1 <- head(AC1, 100)
+BEGIN <- as_datetime("2018-11-0807:41:30.957")
+END <- as_datetime("2018-11-0808:30:16.345")
+BUCKET <- 1000
+for (T in DF1$timestamp) {
+  if(T < BEGIN + BUCKET) {
+    T = BEGIN  
+  } else{BEGIN <- BEGIN + BUCKET} 
+  if(BEGIN > END){
+    break
+  }
+}
+
   
+
 # Create a data set of gpu for initial investigation grouped by hostname and arranged by timestamp
 GPU1 <- as_tibble(gpu) %>%
   group_by(hostname) %>%
