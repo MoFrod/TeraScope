@@ -21,7 +21,14 @@ load.project()
 
 # Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
 
-
+Something is going wrong with article{Taxonomy,
+  title = {A Taxonomy and Survey of CLoud Resource Orchestration Techniques},
+  author = {Denis {Weerasiri}, Moshe Chai {Barukh}, Boualem {Benatallah}},
+  journal = {ACM Computing Surveys},
+  volume = {50},
+  issue = {2},
+  year = {2017}, 
+  url = {http://dx.doi.org/10.11453054177},}
 
 
 
@@ -29,17 +36,35 @@ load.project()
 
 ## Introduction
 
-Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO)in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels(@TeraScope), which are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope).
+Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO)in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels(@TeraScope), which are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The visualisation output can be seen [here](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html).
 
 ## Purpose (- what is the need for the project? justify your choice of response (i.e. the nature of, and plan for your project). To give strength to your argument, you should reference practice elsewhere (e.g. in academic literature or industry practices)
 
-Newcastle University's supercomputer architecture for scalable visualisation allows the institution to produce terapixel viusalisations that support daily updates and undertaking rigorous evaluation (@TeraScope). This project uses a dataset created from the production of a terapixel image by this architecture, and aims to provide useful insights into the computation performance. Understanding this is important as there is significant computational cost (resource, power, environmental and monetary) to producing a high quality terapixel image (@Terapixel). The visualisation output can be seen [here](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html).
+Newcastle University's supercomputer architecture for scalable visualisation allows the institution to produce terapixel viusalisations that support daily updates and undertaking rigorous evaluation (@TeraScope). In achieving this, the university had three objectives:
+
+1. "create a supercomputer architecture for scalable viualisation using the public cloud;
+
+2. produce a terapixel 3D city viusalisation supporting daily updates; and 
+
+3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications." (@TeraScope)
+
+This project focuses on the third objective. It uses a dataset created from the production of a terapixel image by this architecture, and aims to provide useful insights into the computation performance. Understanding this is important as there is significant computational cost (resource, energy, environmental and monetary) to producing a high quality terapixel image (@Terapixel). 
 
 (Include details on reading re: importance for efficiency and environmental impacts)
 
 ##Data Understanding - What, concisely, did you do?
 
-The data set was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@TeraScope). This data shows the performance timing of producing the terapixel, GPU card performance, and the parts of the terapixel image that was rendered in each task (@TeraScope). 
+The data was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@TeraScope). This data shows the performance timing of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@TeraScope) in three different data sets.  
+
+Producing the terapixel appears to require five events (Explain detail of tasks)
+
+Started with an intial visual analysis (find right word from Iain - plotting to get a sense of what the data was doing, then tidied a bit and started EDA)
+
+Newcastle University chose to save rendering time by rendering levels 12, 8 and 4, and sub-sample these to  fill in each set of the intermedidate leels. Consequently, understanding which types of events dominate runtimes is first success crtiera. 
+
+second investigation in to understand the power usage of the top 5, average and bottom five event runtimes. (power draw and render time Q)
+
+What is the relationshio between that and temperature?
 
 ###Data Mining Goals
 
