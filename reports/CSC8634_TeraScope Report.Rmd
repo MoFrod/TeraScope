@@ -21,70 +21,157 @@ load.project()
 
 # Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
 
-Something is going wrong with article{Taxonomy,
-  title = {A Taxonomy and Survey of CLoud Resource Orchestration Techniques},
-  author = {Denis {Weerasiri}, Moshe Chai {Barukh}, Boualem {Benatallah}},
-  journal = {ACM Computing Surveys},
-  volume = {50},
-  issue = {2},
-  year = {2017}, 
-  url = {http://dx.doi.org/10.11453054177},}
+## Understanding
 
+### Background 
 
+This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
 
+### Objectives and success criteria 
 
+Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO) in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels (@Terascope). Terapixels are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The terapixel visualisation created by Newcastle University's cloud supercomputer allows the viewer to "zoom in from an overview of just one square kilometre of the city... to see detail within a single room in an office or a house" (@Terapixel).
 
-## Introduction
-
-Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO)in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels(@TeraScope), which are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The visualisation output can be seen [here](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html).
-
-## Purpose (- what is the need for the project? justify your choice of response (i.e. the nature of, and plan for your project). To give strength to your argument, you should reference practice elsewhere (e.g. in academic literature or industry practices)
-
-Newcastle University's supercomputer architecture for scalable visualisation allows the institution to produce terapixel viusalisations that support daily updates and undertaking rigorous evaluation (@TeraScope). In achieving this, the university had three objectives:
+In delivering this imitative, Newcastle University had three objectives:
 
 1. "create a supercomputer architecture for scalable viualisation using the public cloud;
 
 2. produce a terapixel 3D city viusalisation supporting daily updates; and 
 
-3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications." (@TeraScope)
+3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications." (@Terascope)
 
-This project focuses on the third objective. It uses a dataset created from the production of a terapixel image by this architecture, and aims to provide useful insights into the computation performance. Understanding this is important as there is significant computational cost (resource, energy, environmental and monetary) to producing a high quality terapixel image (@Terapixel). 
+This extended technical project focuses on the third objective. It explores three datasets created from the data produced by the supercomputer architecture during the creation of the terapixel visualisation, and aims to provide useful insights into the computational performance. The process and findings of this report explore the question: "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project is to identify useful insights about the stages of terapixel computation which are most resource intensive. Developing a better understanding of this is important as producing a high quality terapixel image is an intense process with significant computational costs (resource, energy, environmental and monetary) (@Terapixel). 
 
-(Include details on reading re: importance for efficiency and environmental impacts)
+For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT), with data centres estimated to account for 19% of energy consumption (@Shift). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation. 
+
+*(is that a sufficient justification? Other business objectives and why they they were not chosen)*
+
+### Data mining goals and success criteria
+
+To explore the question "How could the computation of a terapixel visualisation be more efficient?" this extended technical project seeks to identify useful insights about the stages of terapixel computation which are most resource intensive. To achieve this, the goals of data mining are:
+
+1. Which event types dominate task run times? The data mining success criteria is the execution time (duration) of event types to determine which event types have the longest execution time. 
+
+2. What is the relationship between execution time and GPU power draw? The data mining success criteria is the power draw of event execution times **this isn't quite right**  
+
+3. What is the relationship between GPU power draw and performance? The data mining success criteria is the **...**
+
+4. Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards). **...**
+
+5. What is the variation in computation requirements for particular tiles? **...*
+
+6. What can we learn about the efficiency of the task scheduling process? **...**
+
+- we should see efficientl linear scalaing as we add more compute notdes - gustafosn-Baris' law @Terapixel Rendering images is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource, following Gustafson-Barsis' law that the problem size scales to fill the compute capacity (@Terapixel). 
 
 ##Data Understanding - What, concisely, did you do?
 
-The data was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@TeraScope). This data shows the performance timing of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@TeraScope) in three different data sets.  
+### Initial data collection
 
-Producing the terapixel appears to require five events (Explain detail of tasks)
+With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). The data for this extended technical project was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@Terascope). It is unclear whether there have been any problems in data acquisition or extraction as Newcastle University has provided the data.
 
-Started with an intial visual analysis (find right word from Iain - plotting to get a sense of what the data was doing, then tidied a bit and started EDA)
+The data provided shows the performance timing of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@Terascope) in three different data sets. This data will provides sufficient information for an initial investigation into the stages of terapixel computation process which are most resource intensive.
+
+### Data description
+
+The run to compute the terapixel visualisation provides the following data sets:
+
+- the application checkpoint events throughout the execution of the render job (timestamp, hostname, eventName, eventType, jobId, taskId);
+
+- the metrics output relating to the status of the GPU on the virtual machines (timestamp, hostname, gpuSerial, gpuUUID, powerDrawWatt, gpuTempC, gpuUtilPerc, gpuMemUtilPerc); and 
+
+- the x,y co-ordinates of the part of the image being rendered for each task (jobId, taskId, x, y, level).
+
+### Data quality 
+
+(add)
+
+### Data exploration 
+
+Started with an intial visual analysis (find right word from Iain - plotting to get a sense of what the data was doing, then tidied a bit and started EDA).
+
+The rest of this section is structured by data mning goals. 
+
+**Goal 1 (Run time)**
 
 Newcastle University chose to save rendering time by rendering levels 12, 8 and 4, and sub-sample these to  fill in each set of the intermedidate leels. Consequently, understanding which types of events dominate runtimes is first success crtiera. 
 
 second investigation in to understand the power usage of the top 5, average and bottom five event runtimes. (power draw and render time Q)
 
-What is the relationshio between that and temperature?
+**Goal 2 (Power draw)**
 
-###Data Mining Goals
+**Goal 3 (Performance)**
 
-Which event types dominate task runtimes? - execution time if often the best metric for accessing comuter performance (Hoefler)
-What is the interplay between GPU temperature and performance?
-What is the interplay between increased power draw and render time?
-Can we quantify the variation in computation requirements for particular tiles?
-Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards).
-What can we learn about the efficiency of the task scheduling process?
+**Goal 4 (GPU performance)**
 
-- we should see efficientl linear scalaing as we add more compute notdes - gustafosn-Baris' law @terapixel Rendering images is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource, following Gustafson-Barsis' law that the problem size scales to fill the compute capacity (@Terapixel).  
+**Goal 5 (Tile computation)**
+
+**Goal 6 (Efficiency)**
+ 
 
 
 ## Evaluation - How successful has it been? Provide evidence sing appropriate evaluation methodologies, and comment on the strengths/weaknesses of your evidence in answering this question.
 - What are the future implications for work in this area? If applicable, which areas of extension work are now possible due to the foundational work you have performed in this project?
 
-
+- execution time if often the best metric for accessing comuter performance (Hoefler)
 
 ## Reflection
 - A brief relfection on your personal and professional learning in undertaking this project. Here you can comment on how you found the process, what you learned about the technologies and methodologies you used, which aspects you found most difficult/straightforward, and any conclusions which will inform the way you undertake similar projects in future. 
+
+
+### Project Plan
+
+(reference approaches to understanding this - which data will be prioritised, and mention iterations. )
+
+### Costs and benefits
+
+This not a resource intensive project (as outlined by the resource invitory below). If the insights generated by this extended technical project are significant, there could be benefits for both Newcastle University and the Newcastle Urban Observatory. For example, the analysis and findings could provide further evidence, or indeed highlight new evidence, to support Newcastle University in delivering its objective to evaluate cloud supercomputing for compute intensive visualisation applications. 
+
+### Terminology 
+
+The terminology used throughout this report includes:
+
+- R, which is a programming language for statistical computing and graphics.
+
+- RStudio, which is an Interated Development Environment for R.
+
+- R packages, which are extensions to the R statistcial programming language. R packages contain code,
+data, and documentation in a standardised collection format that can be installed by users of R. The
+R packages used by this report are listed in the section below.
+
+- Git, which is software for tracking changes in any set of files, usually used for coordinating work among
+programmers collaboratively developing source code. GitHub is a provider of internet hosting for
+software development and version control using Git. Git Bash is an application for Microsoft Windows
+environments which provides an emulation layer for a Git command line experience.
+
+- Tibble, which is a data frame that stores data in R and appears as a table.
+
+(is there anything else I use?)
+
+### Inventory of resources
+
+This project has been undertaken by one part-time person, on a Dell G7 17” laptop. Git, RStudio and a selection of R packages (detailed in the next section) have been used to deliver the project. Newcastle University also provided monitoring data from its cloud supercomputer architecture. 
+
+### Initial assessment of tools and techniques
+
+This project utilises the following tools and techniques:
+
+- CRISP-DM (Chapman et. al. and Wirth (2000)) is the methodology used to deliver data workflow
+best practice;
+
+- Tidyverse for R is the R package used for the analysis;
+
+- ggplot2 for R is the R package used for visualisations;
+
+- RColorBrewer is the R package used to provide accessible colour palettes for visualisations;
+
+- ProjectTemplate is the R package used to improve the reproducibility of this analysis;
+
+- Git (specifically GitHub and GitBash) is used for version control;
+
+- all written documentation is created with the R package, RMarkdown; and
+
+- natbib is an R package used for the bibliography
+
 
 
 \newpage

@@ -1,3 +1,5 @@
+# Initial data exploration to develop understanding of data sets
+
 # Count how many unique hosts there are
 hosts <- AC1 %>%
   group_by(hostname) %>%
@@ -24,46 +26,37 @@ all(AC1$timestamp %in% GPU1$timestamp) #They are not, and so created timestamp b
 # Check whether the hostnames across AC1 and GPU1 are they same
 all(AC1$hostname %in% GPU1$hostname) # They are.
 
-# Smaller subset of data for investigation
+# How many times does rendering happen?
+R <- application.checkpoints %>%
+  filter(eventName == "TotalRender") %>%
+  count() %>%
+  print() # Rendering happens 132080 times 
+
+# How many times does rendering happen per host?
+Rh <- AC2 %>%
+  filter(eventName == "Render") %>%
+  count() %>%
+  as_tibble() %>%
+  arrange(desc(n), .by_group = TRUE) # Some hosts render more than others. Is this because of performance or tasking?
+
+# Smaller subset of data for Matt support
 sub-set <- AC1 %>% head (1000) %>%
 write.csv(sub-set, "subset.csv") #Copy for Matt support
 
 # Plot same set of GPU temperature, memory and core utilisation.
-GPU1 %>% slice(2000:2010) %>%
-  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "#b2df8a", size = 1) + geom_line(aes(y = gpuUtilPerc), colour = "#1f78b4", size = 1) + geom_line(aes(y = gpuMemUtilPerc), colour = "#a6cee3", size = 1) + scale_colour_brewer(palette = "Paired")
+GPU1 %>% head(50) %>%
+  ggplot(aes(x = timestamp)) + geom_line(aes(y = gpuTempC), colour = "#b2df8a", size = 1) + geom_line(aes(y = gpuUtilPerc), colour = "#1f78b4", size = 1) + geom_line(aes(y = gpuMemUtilPerc), colour = "#a6cee3", size = 1) + scale_colour_brewer(palette = "Paired") 
 
 # Plot duration of events
 AC2 %>% head(50) %>%
   ggplot(aes(x = START)) + geom_line(aes(y = duration), colour = "#33a02c", size = 1)
 
 # Plot duration of eventName activities
-ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot()
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot() #Further investigation in EDA1
 
-# Remove Total Render from results
-AC3 <- AC2 %>%
-  filter(eventName != "TotalRender")
 
-# Plot duration of eventName activities without total render
-ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot()
 
-# Remove Render from results
-AC4 <- AC3 %>%
-  filter(eventName != "Render")
 
-# Plot duration of eventName activities without render
-ggplot(AC4, aes(x = eventName, y = duration)) + geom_boxplot()
-
-# Remove Uploading from results
-AC5 <- AC4 %>%
-  filter(eventName != "Uploading")
-
-# Plot duration of eventName activities without uploading
-ggplot(AC5, aes(x = eventName, y = duration)) + geom_boxplot()
-
-# How many times rendering happens (is this the same as hostname?)
-R <- AC2 %>%
-  filter(eventName == "Render") %>%
-  count()
 
 
   #%>%

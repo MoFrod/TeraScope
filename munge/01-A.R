@@ -26,20 +26,6 @@ AC2 <- AC2 %>%
 AC2$duration <- AC2$duration %>%
   as.numeric() %>%
   round(., digits = 2)
- 
-# create time bucket to compare event (confirm timestamp is in correct order, and then do for GPU spreadsheet, then merge on timestamp)
-DF1 <- head(AC1, 100) %>% arrange(timestamp, .by_group = TRUE)
-BEGIN <- as_datetime("2018-11-0807:41:30.957", tz = "Europe/London")
-END <- as_datetime("2018-11-0808:30:16.345", tz = "Europe/London")
-BUCKET <- 1000
-for (T in DF1$timestamp) {
-  if(T < BEGIN + BUCKET) {
-    T = BEGIN  
-  } else{BEGIN <- BEGIN + BUCKET} 
-  if(BEGIN > END){
-    break
-  }
-} 
 
 # Create a data set of gpu for initial investigation grouped by hostname and arranged by timestamp
 GPU1 <- as_tibble(gpu) %>%
@@ -48,9 +34,9 @@ GPU1 <- as_tibble(gpu) %>%
 
 # Remove the non-numeric characters from the timestamp column in GPU1
 GPU1$timestamp <- gsub("T", "", GPU1$timestamp) %>% 
-  str_replace("Z", "") # Removed year, date and alphabetic characters as they're all the same across all 660400 rows
+  str_replace("Z", "") # Removed alphabetic characters as they're all the same across all 660400 rows
 
-# Make timestamp column date/time
+# COnvert timestamp column to date/time in local time zone
 GPU1$timestamp <- as_datetime(GPU1$timestamp, tz = "Europe/London")
 
 
