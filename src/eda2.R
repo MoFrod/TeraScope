@@ -38,11 +38,49 @@ Power_Duration %>%
   tail(100) %>%
   ggplot(aes(x = av_power)) + geom_line(aes(y = av_duration), colour = "#1f78b4", size = 1)
 
-
 # Boxplot execution time by power draw
 ggplot(Power_Duration, aes(x = av_power, y = av_duration)) + geom_boxplot()
 
-# 
+# Create a single data set with power usage and duration for all events except total render
+BEGIN <- as_datetime("2018-11-0807:41:27.242", tz = "Europe/London")
+END <- as_datetime("2018-11-0807:42:27.242", tz = "Europe/London")
+
+AC8 <- AC2 %>%
+  filter(START >= BEGIN, START <= END) %>% # Select start times between BEGIN and END
+  filter (eventName != "TotalRender") %>% # Filter out TotalRender
+  mutate(timestamp = round_date(START, unit = "2 seconds")) # Create new timestamp column where start time is rounded to the nearest 15 seconds
+
+GPU2 <- GPU1 %>%
+  filter(timestamp >= BEGIN, timestamp <= END) %>% # Select timestamp that is between BEGIN and END
+  mutate(timestamp = round_date(timestamp, unit = "2 seconds")) # Alter the timestamp column so that it is rounded to the nearest 15 seconds
+
+Power_Duration1 <- full_join(AC8, GPU2, by = c("timestamp", "hostname")) %>% # Join AC8 and GPU2
+  na.omit() %>% # Omit rows with NA
+  group_by(hostname) %>% # Group by hostname
+  arrange(timestamp, .by_group = TRUE) # Arrange by timestamp
+
+# Quickplot timestamp by power draw for host that consumes the highest av_power
+Power_Duration1 %>% 
+  filter(hostname == "a77ef58b13ad4c01b769dac8409af3f800000D") %>%
+  ggplot(aes(x = timestamp)) + geom_line(aes(y = powerDrawWatt), colour = "#1f78b4", size = 1)
+
+# Quickplot execution time by power draw
+Power_Duration1 %>% 
+  ggplot(aes(x = powerDrawWatt)) + geom_line(aes(y = duration), colour = "#1f78b4", size = 1)
+
+# Quickplot power draw by execution time
+Power_Duration1 %>% 
+  ggplot(aes(x = duration)) + geom_line(aes(y = powerDrawWatt), colour = "#1f78b4", size = 1)
+
+# Quickplot event name by power draw (SAVE)
+ggplot(Power_Duration1, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot()
+
+# Quickplot power draw by duration as boxplot
+ggplot(Power_Duration1, aes(x = powerDrawWatt, y = duration)) + geom_boxplot()
+
+# Quickplot 
+ggplot(Power_Duration1, aes(x = powerDrawWatt)) + geom_histogram()
+ggplot(Power_Duration1, aes(x = duration)) + geom_histogram()
 
 # Create GPU2 sop timestamp isn't as datetime like AC1
 #GPU2 <-  as_tibble(gpu) %>%
