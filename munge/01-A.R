@@ -36,10 +36,12 @@ GPU1 <- as_tibble(gpu) %>%
 GPU1$timestamp <- gsub("T", "", GPU1$timestamp) %>% 
   str_replace("Z", "") # Removed alphabetic characters as they're all the same across all 660400 rows
 
-# COnvert timestamp column to date/time in local time zone
+# Convert timestamp column to date/time in local time zone
 GPU1$timestamp <- as_datetime(GPU1$timestamp, tz = "Europe/London")
 
-
+# Create a data set of tasks.x.y. for intial investigation
+XY1 <- as_tibble(task.x.y) %>%
+  group_by(jobId)
 
 # Create separate columns for start and stop
 #AC2 <- filter(AC1$eventType, "START")

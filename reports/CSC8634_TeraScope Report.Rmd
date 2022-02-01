@@ -25,7 +25,7 @@ load.project()
 
 ### Background 
 
-This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
+This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
 
 ### Objectives and success criteria 
 
@@ -41,17 +41,15 @@ In delivering this imitative, Newcastle University had three objectives:
 
 This extended technical project focuses on the third objective. It explores three datasets created from the data produced by the supercomputer architecture during the creation of the terapixel visualisation, and aims to provide useful insights into the computational performance. The process and findings of this report explore the question: "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project is to identify useful insights about the stages of terapixel computation which are most resource intensive. Developing a better understanding of this is important as producing a high quality terapixel image is an intense process with significant computational costs (resource, energy, environmental and monetary) (@Terapixel). 
 
-For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT), with data centres estimated to account for 19% of energy consumption (@Shift). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation. 
-
-*(is that a sufficient justification? Other business objectives and why they they were not chosen)*
+For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT), with data centres estimated to account for 19% of energy consumption (@Shift). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Data centres are estimated to account for "1% of the total global energy demand" (@Environmental) Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation. 
 
 ### Data mining goals and success criteria
 
 To explore the question "How could the computation of a terapixel visualisation be more efficient?" this extended technical project seeks to identify useful insights about the stages of terapixel computation which are most resource intensive. To achieve this, the goals of data mining are:
 
-1. Which event types dominate task run times? The data mining success criteria is the execution time (duration) of event types to determine which event types have the longest execution time. 
+1. Which events dominate task run times? The data mining success criteria is calculating the run time (duration) of each event to determine which has the longest duration. 
 
-2. What is the relationship between execution time and GPU power draw? The data mining success criteria is the power draw of event execution times **this isn't quite right**  
+2. What is the relationship between run time and GPU power draw? The data mining success criteria is identifying the power draw during event duration.  
 
 3. What is the relationship between GPU power draw and performance? The data mining success criteria is the **...**
 
@@ -67,9 +65,9 @@ To explore the question "How could the computation of a terapixel visualisation 
 
 ### Initial data collection
 
-With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). The data for this extended technical project was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run is split into three jobs to render the terapixel visualisation (levels 4, 8 and 12) (@Terascope). It is unclear whether there have been any problems in data acquisition or extraction as Newcastle University has provided the data.
+With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). The data for this extended technical project was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run processes three levels (levels 4, 8 and 12) of visualisation to render the terapixel (@Terascope). It is unclear whether there have been any problems in data acquisition or extraction as Newcastle University has provided the data.
 
-The data provided shows the performance timing of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@Terascope) in three different data sets. This data will provides sufficient information for an initial investigation into the stages of terapixel computation process which are most resource intensive.
+The data provided shows the timings of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@Terascope) in three different data sets. This data will provides sufficient information for an initial investigation into the stages of terapixel computation process which are most resource intensive.
 
 ### Data description
 
@@ -87,17 +85,94 @@ The run to compute the terapixel visualisation provides the following data sets:
 
 ### Data exploration 
 
-Started with an intial visual analysis (find right word from Iain - plotting to get a sense of what the data was doing, then tidied a bit and started EDA).
+The data exploration outlined in this report began with initial questions to better understand what each data set contained and visual investigation to obverse any obvious patterns. For example:
 
-The rest of this section is structured by data mning goals. 
+```{hosts}
+# How many unique hosts are there?
+hosts <- AC1 %>%
+  group_by(hostname) %>%
+  summarise (n_distinct(hostname)) %>%
+  count() %>%
+  print()
+```
+
+```{serials}
+# How many GPU serials are there?
+gserials <- GPU1 %>%
+  group_by(gpuSerial) %>%
+  summarise(n_distinct(gpuSerial)) %>%
+  count() %>%
+  print()
+```
+
+```{render}
+# How many times does is a visualisation totally rendered?
+R <- AC1 %>%
+  filter(eventName == "TotalRender") %>%
+  count() %>%
+  print()
+```
+
+```{taskId}
+# How many taskIds are there?
+ID <- AC1 %>%
+  group_by(taskId) %>%
+  summarise(n_distinct(taskId)) %>% 
+  count() %>% 
+  print() # This is the same in both application.checkpoints and task.x.y
+```
+
+```{jobID}
+# How many jobIds are there?
+j <- AC1 %>%
+  group_by(jobId) %>%
+  summarise(n_distinct(jobId)) %>%
+  count() %>%
+  print() # This is the same in both application.checkpoints and task.x.y, and corresponds to the levels 4, 8 and 12
+```
+
+To address the objectives and success criteria, the exploratory analysis outlined here starts with applications.checkpoints, moves to gpu, and finishes with the task.x.y in line with the data mining goals. The rest of this section is structured by those goals. 
 
 **Goal 1 (Run time)**
 
-Newcastle University chose to save rendering time by rendering levels 12, 8 and 4, and sub-sample these to  fill in each set of the intermedidate leels. Consequently, understanding which types of events dominate runtimes is first success crtiera. 
+To create a terapixel, Newcastle University render levels 4, 8 and 12, "and subsample these to fill in each set of three intermediate levels" (@Terapixel). There are 5 different events (eventName) that happen during the creation of a visualisation: Saving Config, Render, Tiling, Uploading and TotalRender. The data set application.checkpoints records the timestamp of when these events start and stop (eventType).
+
+To determine which events dominate the run time AC1 is a copy of the application.checkpoints data set. AC2 applies a pivot wider function to AC1 so that eventType 'START' and 'STOP' become columns for the corresponding timestamp for each eventName. Both columns are mutated so that their values are date and time. In a new column, duration is calculated by subtracting START from STOP.
+
+```{AC2}
+# Display AC2 with START, STOP and duration as columns
+print(AC2, n = 6, width = Inf) 
+```
+
+To investigate the duration of each event, a boxplot was created of duration by event name.
+
+```{duration, echo= FALSE}
+# Plot duration of eventName
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot()
+```
+
+This highlights that 'TotalRender' has the longest duration. It is assumed that this is because it includes the duration of all the other events.
+
+AC3 is created by filtering out TotalRender from AC2. Another boxplot was created of duration by event name.
+
+```{duration1}
+# Remove Total Render from results
+AC3 <- AC2 %>%
+  filter(eventName != "TotalRender")
+
+# LABEL AND SAVE # Plot duration of eventName activities without total render
+ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot() 
+```
+
+It is clear that 'Render' has the longest duration, and therefore is the event that dominates the run time. Further exploration related to this data goal can be viewed in EDA1.
+
+**Goal 2 (Power draw)**
+
+What is the relationship between run time and GPU power draw? The data mining success criteria is identifying the power draw during event duration. 
 
 second investigation in to understand the power usage of the top 5, average and bottom five event runtimes. (power draw and render time Q)
 
-**Goal 2 (Power draw)**
+Create graphs. 
 
 **Goal 3 (Performance)**
 
