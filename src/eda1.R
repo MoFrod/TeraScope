@@ -41,7 +41,7 @@ AC7 <- AC2 %>%
   filter(eventName == "TotalRender") %>%
   arrange(desc(duration)) # Arrange so longest duration is at the top
 
-TR <- AC7 %>%
+TR1 <- AC7 %>%
   group_by(hostname) %>% 
   summarise(av_duration = mean(duration), sd_duration = sd(duration)) %>% # Calculate mean and standard deviation of duration for each host.
   mutate(CoV = (sd_duration/av_duration)*100) # New column with coefficient of variation
@@ -65,12 +65,15 @@ RT_short1 <- tail(AC7, 500) %>%
   group_by(hostname) # There are also 247 events with no total time. Why?
 
 # Which are the hosts that have no duration for Total Render?
-RT_NA <- tail(AC7, 247) %>%
+TR_NA <- tail(AC7, 247) %>%
   group_by(hostname) # Isolate the 247 events with no total time.
 
 TR_NA %>%
   count() %>%
   print() # Identify how many times each host has no TR. There are 4 hosts.
+
+#Create csv for 247 for Matt
+write.csv(TR_NA, "TR_NA.csv")
 
 # Do these hosts work at all?
 all(TR_NA %in% TR_long) # These hosts do not appear in the list of those with the longest duration

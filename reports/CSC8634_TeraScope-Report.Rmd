@@ -87,7 +87,7 @@ The run to compute the terapixel visualisation provides the following data sets:
 
 The data exploration outlined in this report began with initial questions to better understand what each data set contained and visual investigation to obverse any obvious patterns. For example:
 
-```{hosts}
+```{R hosts, echo = FALSE}
 # How many unique hosts are there?
 hosts <- AC1 %>%
   group_by(hostname) %>%
@@ -96,7 +96,7 @@ hosts <- AC1 %>%
   print()
 ```
 
-```{serials}
+```{R serials, echo = FALSE}
 # How many GPU serials are there?
 gserials <- GPU1 %>%
   group_by(gpuSerial) %>%
@@ -105,15 +105,15 @@ gserials <- GPU1 %>%
   print()
 ```
 
-```{render}
+```{R render, echo = FALSE}
 # How many times does is a visualisation totally rendered?
-R <- AC1 %>%
+TR <- AC1 %>%
   filter(eventName == "TotalRender") %>%
   count() %>%
   print()
 ```
 
-```{taskId}
+```{R taskId, echo = FALSE}
 # How many taskIds are there?
 ID <- AC1 %>%
   group_by(taskId) %>%
@@ -122,7 +122,7 @@ ID <- AC1 %>%
   print() # This is the same in both application.checkpoints and task.x.y
 ```
 
-```{jobID}
+```{R jobID, echo = FALSE}
 # How many jobIds are there?
 j <- AC1 %>%
   group_by(jobId) %>%
@@ -135,11 +135,11 @@ To address the objectives and success criteria, the exploratory analysis outline
 
 **Goal 1 (Run time)**
 
-To create a terapixel, Newcastle University render levels 4, 8 and 12, "and subsample these to fill in each set of three intermediate levels" (@Terapixel). There are 5 different events (eventName) that happen during the creation of a visualisation: Saving Config, Render, Tiling, Uploading and TotalRender. The data set application.checkpoints records the timestamp of when these events start and stop (eventType).
+To create a terapixel, Newcastle University render levels 4, 8 and 12, "and subsample these to fill in each set of three intermediate levels" (@Terapixel). There are 5 different events (eventName) that happen during the creation of a visualisation: Saving Config, Render, Tiling, Uploading and TotalRender. The data set application.checkpoints records the timestamp of when these events start and stop (eventType). 
 
 To determine which events dominate the run time AC1 is a copy of the application.checkpoints data set. AC2 applies a pivot wider function to AC1 so that eventType 'START' and 'STOP' become columns for the corresponding timestamp for each eventName. Both columns are mutated so that their values are date and time. In a new column, duration is calculated by subtracting START from STOP.
 
-```{AC2}
+```{R AC2, echo = FALSE}
 # Display AC2 with START, STOP and duration as columns
 print(AC2, n = 6, width = Inf) 
 ```
@@ -155,7 +155,7 @@ This highlights that 'TotalRender' has the longest duration. It is assumed that 
 
 AC3 is created by filtering out TotalRender from AC2. Another boxplot was created of duration by event name.
 
-```{duration1}
+```{R duration1, echo = FALSE}
 # Remove Total Render from results
 AC3 <- AC2 %>%
   filter(eventName != "TotalRender")
