@@ -179,15 +179,10 @@ Power_Duration2 %>%
 Power_Duration2 %>% 
   ggplot(aes(x = duration)) + geom_line(aes(y = powerDrawWatt), colour = "#1f78b4", size = 1)
 
-# Quickplot event name by power draw (SAVE)
+# LABEL AND SAVE #Quickplot event name by power draw (SAVE)
 ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot()
 
-# Quickplot power draw by duration as boxplot
-ggplot(Power_Duration2, aes(x = powerDrawWatt, y = duration)) + geom_boxplot()
 
-# Quickplot 
-ggplot(Power_Duration2, aes(x = powerDrawWatt)) + geom_histogram()
-ggplot(Power_Duration2, aes(x = duration)) + geom_histogram()
 
 
 

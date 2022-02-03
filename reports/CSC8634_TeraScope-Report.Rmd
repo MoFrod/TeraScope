@@ -146,7 +146,7 @@ print(AC2, n = 6, width = Inf)
 
 To investigate the duration of each event, a boxplot was created of duration by event name.
 
-```{duration, echo= FALSE}
+```{R duration, echo= FALSE}
 # Plot duration of eventName
 ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot()
 ```
@@ -170,9 +170,78 @@ It is clear that 'Render' has the longest duration, and therefore is the event t
 
 What is the relationship between run time and GPU power draw? The data mining success criteria is identifying the power draw during event duration. 
 
-second investigation in to understand the power usage of the top 5, average and bottom five event runtimes. (power draw and render time Q)
+```{R Power_Duration2, echo = FALSE}
+# Create a single data set with power usage and duration for every event other than total render
+BEGIN <- as_datetime("2018-11-0807:41:27.242", tz = "Europe/London")
+END <- as_datetime("2018-11-0807:42:27.242", tz = "Europe/London")
 
-Create graphs. 
+AC9 <- AC2 %>%
+  filter(START >= BEGIN, START <= END) %>% # Select start times between BEGIN and END
+  filter (eventName != "TotalRender") %>% # Filter out TotalRender
+  mutate(timestamp = round_date(START, unit = "2 seconds")) # Create new timestamp column where start time is rounded to the nearest 15 seconds
+
+GPU2 <- GPU1 %>%
+  filter(timestamp >= BEGIN, timestamp <= END) %>% # Select timestamp that is between BEGIN and END
+  mutate(timestamp = round_date(timestamp, unit = "2 seconds")) # Alter the timestamp column so that it is rounded to the nearest 15 seconds
+
+Power_Duration2 <- full_join(AC9, GPU2, by = c("timestamp", "hostname")) %>% # Join AC8 and GPU2
+  na.omit() %>% # Omit rows with NA
+  group_by(hostname) %>% # Group by hostname
+  arrange(timestamp, .by_group = TRUE) # Arrange by timestamp
+```
+
+```{R EventPower, echo = FALSE}
+# LABEL AND SAVE #Quickplot event name by power draw (SAVE)
+ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot()
+```
+
+```{R TotalRenderPower, echo = FALSE}
+# Create a single data set with power usage and duration for total render
+AC8 <- AC2 %>%
+  filter(START >= BEGIN, START <= END) %>% # Select start times between BEGIN and END
+  filter (eventName == "TotalRender") %>% # Filter TotalRender
+  mutate(timestamp = round_date(START, unit = "2 seconds")) # Create new timestamp column where start time is rounded to the nearest 15 seconds
+
+
+
+Power_Duration1 <- full_join(AC8, GPU2, by = c("timestamp", "hostname")) %>% # Join AC8 and GPU2
+  na.omit() %>% # Omit rows with NA
+  group_by(hostname) %>% # Group by hostname
+  arrange(timestamp, .by_group = TRUE) # Arrange by timestamp
+```
+
+```{R TRPowerDuration, echo = FALSE}
+# SAVE AND LABEL # Plot hostname by power draw and duration of total render
+Power_Duration1 %>%
+  ggplot(aes(x = duration, y = powerDrawWatt)) + geom_point(position = "jitter")
+```
+
+
+```{R HostAverage, echo = FALSE}
+# What is the mean, standard deviation and coefficient of variation for Total Render duration?
+AC7 <- AC2 %>%
+  filter(eventName == "TotalRender") # Filter to create a new data set only with TotalRender
+
+TR1 <- AC7 %>%
+  group_by(hostname) %>% # Group by the virtual machine host name
+  summarise(av_duration = mean(duration), sd_duration = sd(duration)) %>% # Calculate mean and standard deviation of duration for each host.
+  mutate(CoV = (sd_duration/av_duration)*100) # New column with coefficient of variation
+
+# What is the mean, standard deviation and coefficient of variation for GPU power draw?
+Power <- GPU1 %>%
+  group_by(hostname) %>% 
+  summarise(av_power = mean(powerDrawWatt), sd_power = sd(powerDrawWatt)) %>% # Calculate mean and standard deviation of power for each host.
+  mutate(CoV_p = (sd_power/av_power)*100) # New column with coefficient of variation
+
+# Create single data set to compare execution time and power draw. 
+Power_Duration <- left_join(TR1, Power, by = "hostname")
+```
+
+```{R HostPowerDuration, echo = FALSE}
+# SAVE AND LABEL # Quick plot execution time by power draw 
+Power_Duration %>%
+  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter") + geom_smooth()
+```
 
 **Goal 3 (Performance)**
 
