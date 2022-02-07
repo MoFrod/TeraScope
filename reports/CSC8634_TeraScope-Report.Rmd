@@ -288,20 +288,70 @@ Power <- GPU1 %>%
 Power_Duration <- left_join(TR1, Power, by = "hostname")
 ```
 
-These values are combined into a single data set and visualised with a scatter plot.
+These values are combined into a single data set and visualised with the scatter plot below.
+
 ```{R HostPowerDuration, echo = FALSE}
 # Plot average power draw by average duration for each hostname
 Power_Duration %>%
-  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter") + geom_smooth() + labs(x = "Average Duration (seconds)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Duration for Hostname") + scale_fill_brewer(palette = "Paired")
+  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter", color = "#33a02c") + geom_smooth(color = "#525252") + labs(x = "Average Duration (seconds)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Duration for Hostname") 
 ```
+
+It does appear that there are two clear groups of virtual machines (hostname), but it is unclear why. 
 
 **Goal 3 (Performance)**
 
-**Goal 4 (GPU performance)**
+To understand the relationship between GPU power draw and performance, the impact of GPU temperature, core utilisation and memory demand on GPU power needs to be determined. 
 
-**Goal 5 (Tile computation)**
+First, the mean, standard deviation and coefficient of variation are calculated.
 
-**Goal 6 (Efficiency)**
+```{R P_stat, }
+# What is the mean, standard deviation and coefficient of variation for all GPU metrics by host
+Performance <- GPU1 %>%
+  group_by(hostname) %>% # Group by hostname
+  summarise(av_power = mean(powerDrawWatt), sd_power = sd(powerDrawWatt), av_temp = mean(gpuTempC), sd_temp = sd(gpuTempC), av_util = mean(gpuUtilPerc), sd_util = sd(gpuUtilPerc), av_mem = mean(gpuMemUtilPerc), sd_mem = sd(gpuMemUtilPerc)) %>% # Calculate mean and standard deviation of power for each host.
+  mutate(CoV_p = (sd_power/av_power)*100, CoV_t = (sd_temp/av_temp)*100, CoV_u = (sd_util/av_util)*100, CoV_m = (sd_mem/av_mem)*100) # New column with coefficient of variation
+```
+
+
+Can I turn the co-effieinct of variation into a percentage?
+```{R temp.power, echo = FALSE}
+# Plot power by temperature
+Performance %>%
+  ggplot(aes(x = av_temp, y = av_power, color = CoV_t)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Temperature (celcius)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Temperature for Hostname")  # Temperature is loosely correlated to power; temperature seems to increase as you use more power
+```
+
+```{R util.power, echo = FALSE}
+# Plot power by util
+Performance %>%
+  ggplot(aes(x = av_util, y = av_power, color = CoV_u)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Utilisation (percentage)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Core Utilisation for Hostname")
+```
+
+```{R mem.temp, echo = FALSE}
+# Plot power by mem
+Performance %>%
+  ggplot(aes(x = av_mem, y = av_power, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Memory Usage for Hostname") # Power use generally increases as more gpu memory is used - you see a clear divide into two groups here.
+```
+
+```{R mem.util, echo = FALSE}
+# Plot mem by util
+Performance %>%
+  ggplot(aes(x = av_mem, y = av_util, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Utilisation (percentage)", title = "Average Utilisation by Average Memory Usage for Hostname") # Very clear trajectory of more memory corresponds to utilising  more gpu core
+```
+**Goal 4 (Tile computation)**
+
+```{R heatmap, echo = FALSE}
+# Create a heatmap co-ordinates from XY1 with colour as Total Render time
+T1 <- AC7[, c("taskId", "duration")] # Create new tibble with taskId and duration time
+
+TR2 <- left_join(T1, XY1, by = "taskId") # Join together T1 and XY1
+
+TR2 %>%
+  ggplot(aes(x = x, y = y, fill = duration)) + geom_tile() # Surfaces with intense texture take more time to render, for example stadium seats and roofs with different surfaces such as satelites. 
+```
+
+**Goal 5 (GPU serials)**
+
+**Goal 6 (Tasking Efficiency)**
  
 
 

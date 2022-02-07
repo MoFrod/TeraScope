@@ -1,12 +1,10 @@
-#Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? 
+# Create a heatmap co-ordinates from XY1 with colour as Total Render time
+T1 <- AC7[, c("taskId", "duration")] # Create new tibble with taskId and duration time
 
-# Join TR1 with Performance
-TR_P <- left_join(TR1, Performance, by = "hostname")
+TR2 <- left_join(T1, XY1, by = "taskId") # Join together T1 and XY1
 
-# Select to x of TR_P and match it to the hosts in GPU1
-s_GPU <- TR_P %>%
-  arrange(desc(av_duration)) %>%
-  head(50)
+TR2 %>%
+  ggplot(aes(x = x, y = y, fill = duration)) + geom_tile() # Surfaces with intense texture take more time to render, for example stadium seats and roofs with different surfaces such as satelites. 
 
-
-s_GPU1 <- left_join(s_GPU, GPU1, by = "hostname")
+# Join together XY1 and Power_Duration1 by taskId
+Total1 <- left_join(XY1, Power_Duration2, by = "taskId")

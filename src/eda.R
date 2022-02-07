@@ -110,3 +110,4 @@ AC2 %>% head(50) %>%
 # Plot duration of eventName activities as boxplot
 ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot() #Further investigation in EDA1
 
+
