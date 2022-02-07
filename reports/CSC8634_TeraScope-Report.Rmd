@@ -25,49 +25,51 @@ load.project()
 
 ### Background 
 
-This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
+This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of *[this]* (http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
 
 ### Objectives and success criteria 
 
 Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO) in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels (@Terascope). Terapixels are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The terapixel visualisation created by Newcastle University's cloud supercomputer allows the viewer to "zoom in from an overview of just one square kilometre of the city... to see detail within a single room in an office or a house" (@Terapixel).
 
-In delivering this imitative, Newcastle University had three objectives:
+In delivering this initative, Newcastle University had three objectives:
 
 1. "create a supercomputer architecture for scalable viualisation using the public cloud;
 
 2. produce a terapixel 3D city viusalisation supporting daily updates; and 
 
-3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications." (@Terascope)
+3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications" (@Terascope).
 
 This extended technical project focuses on the third objective. It explores three datasets created from the data produced by the supercomputer architecture during the creation of the terapixel visualisation, and aims to provide useful insights into the computational performance. The process and findings of this report explore the question: "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project is to identify useful insights about the stages of terapixel computation which are most resource intensive. Developing a better understanding of this is important as producing a high quality terapixel image is an intense process with significant computational costs (resource, energy, environmental and monetary) (@Terapixel). 
 
-For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT), with data centres estimated to account for 19% of energy consumption (@Shift). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Data centres are estimated to account for "1% of the total global energy demand" (@Environmental) Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation. 
+With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Data centres are estimated to account for "1% of the total global energy demand" (@Environmental) Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation and a necessary step towards greater sustainability. 
 
 ### Data mining goals and success criteria
 
 To explore the question "How could the computation of a terapixel visualisation be more efficient?" this extended technical project seeks to identify useful insights about the stages of terapixel computation which are most resource intensive. To achieve this, the goals of data mining are:
 
-1. Which events dominate task run times? The data mining success criteria is calculating the run time (duration) of each event to determine which has the longest duration. 
+1. Which events dominate task duration (run time)? The data mining success criteria is calculating the duration of each event to determine which has the longest duration. 
 
-2. What is the relationship between run time and GPU power draw? The data mining success criteria is identifying the power draw during event duration.  
+2. What is the relationship between duration and GPU power draw? The data mining success criteria is identifying the power needed for duration time to better understand what demands more GPU power.  
 
-3. What is the relationship between GPU power draw and performance? The data mining success criteria is the **...**
+3. What is the relationship between GPU power draw and performance? The data mining success criteria is identifying the impact of GPU temperature, core utilisation and memory demand on GPU power to understand what demands more power.
 
-4. Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards). **...**
+[SECEOND ITERATION]
+4. What is the variation in computation requirements for particular tiles? The data mining success criteria is identifying if there is a variation in computing requirements to determine which tiles are most intensive to produce. 
 
-5. What is the variation in computation requirements for particular tiles? **...*
+5. Are there particular GPU cards (based on their serial numbers) whose performance differs to other cards? The data mining success criteria is identifying the outlier GPU cards (for example, cards that are perpetually slow) to determine which cards could benefit from further investigation to improve computation performance.
 
+[THIRD ITERATION]
 6. What can we learn about the efficiency of the task scheduling process? **...**
 
 - we should see efficientl linear scalaing as we add more compute notdes - gustafosn-Baris' law @Terapixel Rendering images is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource, following Gustafson-Barsis' law that the problem size scales to fill the compute capacity (@Terapixel). 
 
-##Data Understanding - What, concisely, did you do?
+## Data Understanding
 
 ### Initial data collection
 
-With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). The data for this extended technical project was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run processes three levels (levels 4, 8 and 12) of visualisation to render the terapixel (@Terascope). It is unclear whether there have been any problems in data acquisition or extraction as Newcastle University has provided the data.
+The data for this extended technical project was created during a run (from application checkpoint and system metric output) using 1024 GPU nodes, and this run processes three levels of visualisation (levels 4, 8 and 12) to render the terapixel (@Terascope). It is unclear whether there have been any problems in data acquisition or extraction as Newcastle University has provided the data.
 
-The data provided shows the timings of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@Terascope) in three different data sets. This data will provides sufficient information for an initial investigation into the stages of terapixel computation process which are most resource intensive.
+The data provided shows the timings of producing the terapixel, GPU card performance, and the coordinates for the part of the terapixel image that was rendered in each task (@Terascope) in three different data sets. This data appears to be raw, but of sufficient quality to be tided and analysed. It will provide sufficient information for an initial investigation into the stages of terapixel computation process which are most resource intensive.
 
 ### Data description
 
@@ -79,41 +81,42 @@ The run to compute the terapixel visualisation provides the following data sets:
 
 - the x,y co-ordinates of the part of the image being rendered for each task (jobId, taskId, x, y, level).
 
-### Data quality 
-
-(add)
-
 ### Data exploration 
 
-The data exploration outlined in this report began with initial questions to better understand what each data set contained and visual investigation to obverse any obvious patterns. For example:
+The data exploration outlined in this report began with initial questions to better understand what each data set contained and visual investigation to obverse any obvious patterns. Further details of this initial exploration can be seen in the file 'eda.R' in the src folder. Examples are shared below:
 
-```{R hosts, echo = FALSE}
-# How many unique hosts are there?
+```{R hosts, include=FALSE}
+# How many unique hostnames are there?
 hosts <- AC1 %>%
   group_by(hostname) %>%
   summarise (n_distinct(hostname)) %>%
-  count() %>%
-  print()
+  count() 
 ```
 
-```{R serials, echo = FALSE}
+1. There are 1024 unique host names, which suggests that these are the names of each virtual machine containing the GPU nodes. 
+
+```{R serials, include=FALSE}
 # How many GPU serials are there?
 gserials <- GPU1 %>%
   group_by(gpuSerial) %>%
   summarise(n_distinct(gpuSerial)) %>%
-  count() %>%
-  print()
+  count() 
 ```
 
-```{R render, echo = FALSE}
-# How many times does is a visualisation totally rendered?
-TR <- AC1 %>%
+2. There are 1024 unique GPU serials, which suggests that each virtual machine has one GPU node with its own unique serial number. 
+
+```{R totalrender, include=FALSE}
+# How many times does TotalRender happen per host?
+TRh <- AC1 %>%
   filter(eventName == "TotalRender") %>%
   count() %>%
-  print()
+  as_tibble() %>%
+  arrange(desc(n), .by_group = FALSE)
 ```
 
-```{R taskId, echo = FALSE}
+3. It appears that some virtual machines complete more 'TotalRender' than others, suggesting that some are more productive.
+
+```{R taskId, include=FALSE}
 # How many taskIds are there?
 ID <- AC1 %>%
   group_by(taskId) %>%
@@ -122,7 +125,9 @@ ID <- AC1 %>%
   print() # This is the same in both application.checkpoints and task.x.y
 ```
 
-```{R jobID, echo = FALSE}
+4. There are 65793 taskIds in the applications.checkpoint data set (copied as AC1), which matches the number of taskIds in the task.x.y data set.
+
+```{R jobID, include=FALSE}
 # How many jobIds are there?
 j <- AC1 %>%
   group_by(jobId) %>%
@@ -131,24 +136,26 @@ j <- AC1 %>%
   print() # This is the same in both application.checkpoints and task.x.y, and corresponds to the levels 4, 8 and 12
 ```
 
-To address the objectives and success criteria, the exploratory analysis outlined here starts with applications.checkpoints, moves to gpu, and finishes with the task.x.y in line with the data mining goals. The rest of this section is structured by those goals. 
+5. There are 3 distinct jobIds in the applications.checkpoint data set (copied as AC1), which is the same in task.x.y, and seems to reflect the three visualisation levels (level 4, 8 and 12). 
+
+To address the key objective and success criteria, the exploratory analysis outlined in the rest of this section starts with applications.checkpoints, moves to gpu, and finishes with the task.x.y in line with the data mining goals and is structured by those goals. Each goal has it's own eda file in the src folder.
 
 **Goal 1 (Run time)**
 
 To create a terapixel, Newcastle University render levels 4, 8 and 12, "and subsample these to fill in each set of three intermediate levels" (@Terapixel). There are 5 different events (eventName) that happen during the creation of a visualisation: Saving Config, Render, Tiling, Uploading and TotalRender. The data set application.checkpoints records the timestamp of when these events start and stop (eventType). 
 
-To determine which events dominate the run time AC1 is a copy of the application.checkpoints data set. AC2 applies a pivot wider function to AC1 so that eventType 'START' and 'STOP' become columns for the corresponding timestamp for each eventName. Both columns are mutated so that their values are date and time. In a new column, duration is calculated by subtracting START from STOP.
+To determine which events have the longest duration (which means that they dominate the run time), the application.checkpoints data set is copied as AC1. AC2 applies a pivot wider function to AC1 so that eventType 'START' and 'STOP' become columns for the corresponding timestamp for each eventName. Both columns are mutated so that their values are date and time. In a new column, duration is calculated by subtracting START from STOP.
 
-```{R AC2, echo = FALSE}
+```{R AC2, include=FALSE}
 # Display AC2 with START, STOP and duration as columns
-print(AC2, n = 6, width = Inf) 
+print(AC2, n = 6, width = Inf)
 ```
 
 To investigate the duration of each event, a boxplot was created of duration by event name.
 
 ```{R duration, echo= FALSE}
 # Plot duration of eventName
-ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot()
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration (seconds)", title = "Boxplot of Duration by Name of Event") + theme(legend.position = "none")
 ```
 
 This highlights that 'TotalRender' has the longest duration. It is assumed that this is because it includes the duration of all the other events.
@@ -160,24 +167,50 @@ AC3 is created by filtering out TotalRender from AC2. Another boxplot was create
 AC3 <- AC2 %>%
   filter(eventName != "TotalRender")
 
-# LABEL AND SAVE # Plot duration of eventName activities without total render
-ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot() 
+# Plot duration of eventName activities without total render
+ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration (seconds)", title = "Boxplot of Duration by Name of Event without TotalRender") + theme(legend.position = "none") 
 ```
 
-It is clear that 'Render' has the longest duration, and therefore is the event that dominates the run time. Further exploration related to this data goal can be viewed in EDA1.
+It is clear that 'Render' has the longest duration, and therefore is the event that dominates the run time. 
+
+```{R longestrender, echo = FALSE}
+# Which hosts have the longest Render time?
+AC6 <- AC3 %>%
+  filter(eventName == "Render") %>%
+  arrange(desc(duration)) # Arrange so longest duration is at the top
+
+R_long <- head(AC6, 50) %>%
+  group_by(hostname) %>% # Isolate the 50 longest durations
+  print(., n = 5, width = Inf)
+```
+
+The hostnames of the virtual machines with the longest Render durations (over 74 seconds) are:
+
+1. 0d56a730076643d585f77e00d2d8521a00000I with 81.51 seconds;
+
+2. 4a79b6d2616049edbf06c6aa58ab426a000003 with 80.16 seconds;
+
+3. 95b4ae6d890e4c46986d91d7ac4bf08200000G with 77.59 seconds;
+
+4. 6139a35676de44d6b61ec247f0ed865700000I with 75.12 seconds; and 
+
+5. 5903af3699134795af7eafc605ae5fc700000U with 74.02 seconds. 
+
+Further exploration related to this data goal can be viewed in EDA1.
 
 **Goal 2 (Power draw)**
 
-What is the relationship between run time and GPU power draw? The data mining success criteria is identifying the power draw during event duration. 
+To identify the power needed for duration time, the application.checkpoints and gpu data set needed to be combined. This could be achieved by either timestamp or hostname as the common values across both data sets. Joining by hostname was unlikely to provide us with the desired result as hostnames appeared more than once in both data sets.
 
-```{R Power_Duration2, echo = FALSE}
+The code chunk below sets out how the two data sets were joined by timestamp.
+
+```{R Power_Duration2}
 # Create a single data set with power usage and duration for every event other than total render
 BEGIN <- as_datetime("2018-11-0807:41:27.242", tz = "Europe/London")
 END <- as_datetime("2018-11-0807:42:27.242", tz = "Europe/London")
 
 AC9 <- AC2 %>%
   filter(START >= BEGIN, START <= END) %>% # Select start times between BEGIN and END
-  filter (eventName != "TotalRender") %>% # Filter out TotalRender
   mutate(timestamp = round_date(START, unit = "2 seconds")) # Create new timestamp column where start time is rounded to the nearest 15 seconds
 
 GPU2 <- GPU1 %>%
@@ -190,32 +223,50 @@ Power_Duration2 <- full_join(AC9, GPU2, by = c("timestamp", "hostname")) %>% # J
   arrange(timestamp, .by_group = TRUE) # Arrange by timestamp
 ```
 
+Initially, a boxplot was created of power draw by event name to see if there was an obvious correlation between duration and power draw.
+
 ```{R EventPower, echo = FALSE}
-# LABEL AND SAVE #Quickplot event name by power draw (SAVE)
-ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot()
+# Plot event name by power draw
+ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot(alpha = 0.3, color = "#33a02c") + labs(x = "Name of Event", y = "Power Draw (watts)", title = "Boxplot of Power Draw by Name of Event without TotalRender") + theme(legend.position = "none")
 ```
 
-```{R TotalRenderPower, echo = FALSE}
-# Create a single data set with power usage and duration for total render
-AC8 <- AC2 %>%
-  filter(START >= BEGIN, START <= END) %>% # Select start times between BEGIN and END
-  filter (eventName == "TotalRender") %>% # Filter TotalRender
-  mutate(timestamp = round_date(START, unit = "2 seconds")) # Create new timestamp column where start time is rounded to the nearest 15 seconds
+Interestingly, the events with the highest duration (TotalRender and Render) do not have the largest power draw. Tiling and Upload seem to consume the most power.
 
+The combined data set was then filtered to see the power draw by duration for 'Tiling'. This was graphed in a scatter plot, coloured by 'jobId', below:
 
+```{R TPowerDuration, echo = FALSE}
+# SAVE AND LABEL # Plot hostname by power draw and duration of tiling
+Power_Duration2 %>%
+  filter(eventName == "Tiling") %>%
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Tiling: Power Draw by Duration") + theme(legend.position = "bottom") + scale_color_brewer(palette = "Paired")
+```
+Given that we know there are 2 jobIds, it is interesting to observe that most of the tiling occurs for the jobId of level 12 (1024-lvl12-7e026be3-5fd0-48ee-b7d1-abd61f747705). It is unclear if this is a problem with the data wrangling, or a true result. Further investigation is required. 
 
-Power_Duration1 <- full_join(AC8, GPU2, by = c("timestamp", "hostname")) %>% # Join AC8 and GPU2
-  na.omit() %>% # Omit rows with NA
-  group_by(hostname) %>% # Group by hostname
-  arrange(timestamp, .by_group = TRUE) # Arrange by timestamp
+The combined data set was then filtered to see the power draw by duration for 'Uploading'. This was graphed in a scatter plot, coloured by 'jobId', below:
+
+```{R UPowerDuration, echo = FALSE}
+# Plot hostname by power draw and duration of uploading
+Power_Duration2 %>%
+  filter(eventName == "Uploading") %>%
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Uploading: Power Draw by Duration") + theme(legend.position = "bottom") + scale_color_brewer(palette = "Paired")
 ```
 
-```{R TRPowerDuration, echo = FALSE}
+The same pattern is observed in uploading as for tiling, where there is only power draw and duration data for 2 jobIds (level 8 and 12). Interestingly, here there are also two distinct groups for duration. This would benefit from further exploration.
+
+The combined data set was then filtered to see the power draw by duration for 'TotalRender'. This was graphed in a scatter plot, coloured by 'jobId', below:
+
+```{R TPowerDuration1, echo = FALSE}
 # SAVE AND LABEL # Plot hostname by power draw and duration of total render
-Power_Duration1 %>%
-  ggplot(aes(x = duration, y = powerDrawWatt)) + geom_point(position = "jitter")
+Power_Duration2 %>%
+  filter(eventName == "TotalRender") %>%
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "TotalRender: Power Draw by Duration") + theme(legend.position = "bottom") + scale_color_brewer(palette = "Paired")
 ```
 
+There are 3 jobIds visible in the scatter plot for TotalRender, although data for level 4 (1024-lvl4-90b0c947-dcfc-4eea-a1ee-efe843b698df) only appears once. It also seems that there are 3 groups for duration.
+
+In the scatter plots above, however, there is not an obvious correlation between power draw and duration. In the tiling and uploading scatter plots it seems that there is some sort of OFF/ON division in the data, as there is an observable gap in the power draw. There also seems to be some sort of limitation on the virtual machine, perhaps specific virtual machines are tasked with tasks that are more intensive as there appears to be three separate groups by duration,  not necessarily by jobId (visualisation level). 
+
+To better understand whether there is any observable pattern, the mean, standard deviation and coefficient of variation for power draw and duration was calculated in the code chunk below. 
 
 ```{R HostAverage, echo = FALSE}
 # What is the mean, standard deviation and coefficient of variation for Total Render duration?
@@ -229,7 +280,7 @@ TR1 <- AC7 %>%
 
 # What is the mean, standard deviation and coefficient of variation for GPU power draw?
 Power <- GPU1 %>%
-  group_by(hostname) %>% 
+  group_by(hostname) %>% # Group by hostname
   summarise(av_power = mean(powerDrawWatt), sd_power = sd(powerDrawWatt)) %>% # Calculate mean and standard deviation of power for each host.
   mutate(CoV_p = (sd_power/av_power)*100) # New column with coefficient of variation
 
@@ -237,10 +288,11 @@ Power <- GPU1 %>%
 Power_Duration <- left_join(TR1, Power, by = "hostname")
 ```
 
+These values are combined into a single data set and visualised with a scatter plot.
 ```{R HostPowerDuration, echo = FALSE}
-# SAVE AND LABEL # Quick plot execution time by power draw 
+# Plot average power draw by average duration for each hostname
 Power_Duration %>%
-  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter") + geom_smooth()
+  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter") + geom_smooth() + labs(x = "Average Duration (seconds)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Duration for Hostname") + scale_fill_brewer(palette = "Paired")
 ```
 
 **Goal 3 (Performance)**

@@ -6,23 +6,23 @@ ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot() # Total Render ha
 
 # Remove Total Render from results
 AC3 <- AC2 %>%
-  filter(eventName != "TotalRender")
+  filter(eventName != "TotalRender") # Filter out TotalRender from eventName
 
-# LABEL AND SAVE # Plot duration of eventName activities without total render
+# Plot duration of eventName activities without total render as boxplot
 ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot() # Render dominates run time with the longest execution times
 
 # Remove Render from results
 AC4 <- AC3 %>%
-  filter(eventName != "Render")
+  filter(eventName != "Render") # Filter out Render from eventName
 
 # Plot duration of eventName activities without render to see other execution times better
 ggplot(AC4, aes(x = eventName, y = duration)) + geom_boxplot() # Uploading has a significantly larger execution time than tiling and saving config.
 
 # Remove Uploading from results
 AC5 <- AC4 %>%
-  filter(eventName != "Uploading")
+  filter(eventName != "Uploading") # FIlter out uploading from eventName
 
-# LABEL AND SAVE # Plot duration of eventName activities without uploading to see saving config and tiling execution times better
+# Plot duration of eventName activities without uploading to see saving config and tiling execution times better
 ggplot(AC5, aes(x = eventName, y = duration)) + geom_boxplot() 
 
 # Which hosts have the longest Render time?
@@ -82,17 +82,3 @@ TR_long1 <- head(AC7, 65546) %>%
   group_by(hostname) # Remove the 247 events from the overall list
 
 all(TR_NA %in% TR_long1) # They do not seem to work at all. 
-
-#AC7 <- AC2 %>%
-  #filter(eventName == "TotalRender") %>%
-  #pivot_wider(names_from = hostname, values_from = duration) %>%
-  #pivot_wider(names_from = n, values from)
-
-
-#rt_hosts <- AC2 %>%
-  #summarise(hostname, count = mean(duration, na.rm = TRUE))
-
-#AC6 <- AC2 %>%
-  #filter(eventName == "TotalRender") %>%
-  #pivot_wider(names_from = hostname, values_from = duration) 
-
