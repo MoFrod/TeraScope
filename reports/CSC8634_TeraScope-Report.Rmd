@@ -25,7 +25,7 @@ load.project()
 
 ### Background 
 
-This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of *[this]* (http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
+This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this] (http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
 
 ### Objectives and success criteria 
 
@@ -53,15 +53,46 @@ To explore the question "How could the computation of a terapixel visualisation 
 
 3. What is the relationship between GPU power draw and performance? The data mining success criteria is identifying the impact of GPU temperature, core utilisation and memory demand on GPU power to understand what demands more power.
 
-[SECEOND ITERATION]
-4. What is the variation in computation requirements for particular tiles? The data mining success criteria is identifying if there is a variation in computing requirements to determine which tiles are most intensive to produce. 
-
-5. Are there particular GPU cards (based on their serial numbers) whose performance differs to other cards? The data mining success criteria is identifying the outlier GPU cards (for example, cards that are perpetually slow) to determine which cards could benefit from further investigation to improve computation performance.
-
-[THIRD ITERATION]
-6. What can we learn about the efficiency of the task scheduling process? **...**
 
 - we should see efficientl linear scalaing as we add more compute notdes - gustafosn-Baris' law @Terapixel Rendering images is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource, following Gustafson-Barsis' law that the problem size scales to fill the compute capacity (@Terapixel). 
+
+## Tools
+
+
+This project utilises the following terminology, tools and techniques: 
+
+- R, which is a programming language for statistical computing and graphics.
+
+- RStudio, which is an Interated Development Environment for R.
+
+- R packages, which are extensions to the R statistcial programming language. R packages contain code,
+data, and documentation in a standardised collection format that can be installed by users of R. The
+R packages used by this report are listed in the section below.
+
+- Git, which is software for tracking changes in any set of files, usually used for coordinating work among
+programmers collaboratively developing source code. GitHub is a provider of internet hosting for
+software development and version control using Git. Git Bash is an application for Microsoft Windows
+environments which provides an emulation layer for a Git command line experience.
+
+- Tibble, which is a data frame that stores data in R and appears as a table.
+
+- CRISP-DM (Chapman et. al. and Wirth (2000)) is the methodology used to deliver data workflow
+best practice;
+
+- Tidyverse for R is the R package used for the analysis;
+
+- ggplot2 for R is the R package used for visualisations;
+
+- RColorBrewer is the R package used to provide accessible colour palettes for visualisations;
+
+- ProjectTemplate is the R package used to improve the reproducibility of this analysis;
+
+- [SHINY?]
+
+- all written documentation is created with the R package, RMarkdown; and
+
+- natbib is an R package used for the bibliography
+
 
 ## Data Understanding
 
@@ -337,7 +368,29 @@ Performance %>%
 Performance %>%
   ggplot(aes(x = av_mem, y = av_util, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Utilisation (percentage)", title = "Average Utilisation by Average Memory Usage for Hostname") # Very clear trajectory of more memory corresponds to utilising  more gpu core
 ```
+## Understanding (second iteration)
+
+### Objectives and success criteria
+
+This extended technical project explores "How could the computation of a terapixel visualisation be more efficient?"to identify useful insights about the stages of terapixel computation which are most resource intensive. An iniitail investigation into the three data sets provided by Newcastle University suggests that rending the visualisation is most time intensive, but that tiling and uploading the visualisation is most power intensive. GPU performance also appears to be loosely correlated with power consumption. However, CPU card usilisation of core and memory appear to be tightly correlated. A better understanding of what is driving the duration of the visualisation and the relationship of GPU cards performance is need to idenitfy useful insights. 
+
+### Data mining goals and success criteria
+
+To better understand the resource intensity of rendering a terapixel, the three data sets need to be explored as one whole picture... The second iteration of data mining aims to determine:
+
+4. What is the variation in computation requirements for particular tiles? The data mining success criteria is identifying if there is a variation in computing requirements to determine which tiles are most intensive to produce. 
+
+5. Are there particular GPU cards (based on their serial numbers) whose performance differs to other cards? The data mining success criteria is identifying the outlier GPU cards (for example, cards that are perpetually slow) to determine which cards could benefit from further investigation to improve computation performance.
+
+## Data understanding (second iteration)
+
+The details of data collection, description and quality outlined in the first iteration of data understanding also apply to this second iteration. 
+
+### Data exploration
+
 **Goal 4 (Tile computation)**
+
+There is a significant amount of variation across the power consumption and render duration for each hostname. To better understand why this might be occurring, a heat map is created from the x and y co-ordinates  to identify if the intensity of the visualisation accounts for this. 
 
 ```{R heatmap, echo = FALSE}
 # Create a heatmap co-ordinates from XY1 with colour as Total Render time
@@ -349,74 +402,65 @@ TR2 %>%
   ggplot(aes(x = x, y = y, fill = duration)) + geom_tile() # Surfaces with intense texture take more time to render, for example stadium seats and roofs with different surfaces such as satelites. 
 ```
 
+As mentioned in the background, the tile coordinates ultimately generate [this] (http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. 
+
+The heat map suggest that the more patterned edge of the stadium (perhaps seating), roofs with more texture (such as satellites) take longer to process. 
+
 **Goal 5 (GPU serials)**
+
+The slowest gpu cards are:
+
+```{R s_gpu, }
+# Filter out gpu cards that have the longest duration
+Power_Duration3 <- Power_Duration2 %>%
+  group_by(gpuSerial) %>%
+  mutate(av_gpu_t = mean(duration))
+
+S_gpu <- Power_Duration3 %>%
+  filter(av_gpu_t >= 34) %>%
+  arrange(desc(av_gpu_t)) %>%
+  head(10)
+```
+
+Interestingly, the slowest gpu serials don't use much power. Why?
+
+## Understanding (third iteration)
+
+### Objectives and success criteria
+
+This extended technical project explores "How could the computation of a terapixel visualisation be more efficient?"to identify useful insights about the stages of terapixel computation which are most resource intensive.... A better understanding of what tasking is needed....
+
+### Data mining goals and success criteria
+
+To better understand the resource intensity of rendering a terapixel, the three data sets need to be explored as one whole picture... The third iteration of data mining aims to determine:
+
+6. What can we learn about the efficiency of the task scheduling process? **...**
+
+## Data understanding (second iteration)
+
+The details of data collection, description and quality outlined in the first iteration of data understanding also apply to this second iteration. 
+
+### Data exploration
 
 **Goal 6 (Tasking Efficiency)**
  
-
+I think the tasking is trying to group based on performance requirement of the tile rendering, which is why we see the groups. Not sure how to prove. 
 
 ## Evaluation - How successful has it been? Provide evidence sing appropriate evaluation methodologies, and comment on the strengths/weaknesses of your evidence in answering this question.
+
+### Assessment of results
+
 - What are the future implications for work in this area? If applicable, which areas of extension work are now possible due to the foundational work you have performed in this project?
 
 - execution time if often the best metric for accessing comuter performance (Hoefler)
+
+- potential next steps. 
 
 ## Reflection
 - A brief relfection on your personal and professional learning in undertaking this project. Here you can comment on how you found the process, what you learned about the technologies and methodologies you used, which aspects you found most difficult/straightforward, and any conclusions which will inform the way you undertake similar projects in future. 
 
 
-### Project Plan
 
-(reference approaches to understanding this - which data will be prioritised, and mention iterations. )
-
-### Costs and benefits
-
-This not a resource intensive project (as outlined by the resource invitory below). If the insights generated by this extended technical project are significant, there could be benefits for both Newcastle University and the Newcastle Urban Observatory. For example, the analysis and findings could provide further evidence, or indeed highlight new evidence, to support Newcastle University in delivering its objective to evaluate cloud supercomputing for compute intensive visualisation applications. 
-
-### Terminology 
-
-The terminology used throughout this report includes:
-
-- R, which is a programming language for statistical computing and graphics.
-
-- RStudio, which is an Interated Development Environment for R.
-
-- R packages, which are extensions to the R statistcial programming language. R packages contain code,
-data, and documentation in a standardised collection format that can be installed by users of R. The
-R packages used by this report are listed in the section below.
-
-- Git, which is software for tracking changes in any set of files, usually used for coordinating work among
-programmers collaboratively developing source code. GitHub is a provider of internet hosting for
-software development and version control using Git. Git Bash is an application for Microsoft Windows
-environments which provides an emulation layer for a Git command line experience.
-
-- Tibble, which is a data frame that stores data in R and appears as a table.
-
-(is there anything else I use?)
-
-### Inventory of resources
-
-This project has been undertaken by one part-time person, on a Dell G7 17” laptop. Git, RStudio and a selection of R packages (detailed in the next section) have been used to deliver the project. Newcastle University also provided monitoring data from its cloud supercomputer architecture. 
-
-### Initial assessment of tools and techniques
-
-This project utilises the following tools and techniques:
-
-- CRISP-DM (Chapman et. al. and Wirth (2000)) is the methodology used to deliver data workflow
-best practice;
-
-- Tidyverse for R is the R package used for the analysis;
-
-- ggplot2 for R is the R package used for visualisations;
-
-- RColorBrewer is the R package used to provide accessible colour palettes for visualisations;
-
-- ProjectTemplate is the R package used to improve the reproducibility of this analysis;
-
-- Git (specifically GitHub and GitBash) is used for version control;
-
-- all written documentation is created with the R package, RMarkdown; and
-
-- natbib is an R package used for the bibliography
 
 
 

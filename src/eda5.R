@@ -1,26 +1,16 @@
 #Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? 
 
-# Join TR1 with Performance
-TR_P <- left_join(TR1, Performance, by = "hostname")
+# Filter out gpu cards that have the longest duration
+Power_Duration3 <- Power_Duration2 %>%
+  group_by(gpuSerial) %>%
+  mutate(av_gpu_t = mean(duration))
 
-# Join TR_P with GPU1 by hostname
-s_GPU <- left_join(TR_P, GPU1, by = "hostname")
+S_gpu <- Power_Duration3 %>%
+  filter(av_gpu_t >= 34) %>%
+  arrange(desc(av_gpu_t)) %>%
+  head(10)
 
-# How many unique hostnames are there?
-hosts1 <- s_GPU %>%
-  group_by(hostname) %>% # Group by hostname
-  summarise (n_distinct(hostname)) %>% # Summarise number of distinct hostnames
-  count() %>%
-  print()
-
-# Group s_GPU by hostname
-s_GPU <- s_GPU %>%
-  group_by(hostname)
-
-# Have one row per unique hostname
-s_GPU1 <- distinct(s_GPU, hostname, .keep_all = TRUE)
+# Plot S-gpu as barplot
+S_gpu %>%
+  ggplot(aes(x = av_gpu_t, y =powerDrawWatt, fill = gpuSerial)) + geom_boxplot()
   
-  
-# Plot 
-s_GPU %>%
-  ggplot(aes(x = av_mem, y = time)) + geom_point(position = "jitter") + geom_smooth()
