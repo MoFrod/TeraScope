@@ -1,1 +1,1 @@
-Here you can store any graphs that you produce.
+Any graphs produced as stored here.

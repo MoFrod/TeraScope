@@ -7,6 +7,9 @@ AC1 <- as_tibble(application.checkpoints) %>%
 AC1$timestamp <- gsub("T", "", AC1$timestamp) %>% 
   str_replace("Z", "") # Removed alphabetic characters as they're all the same across all 660400 rows
 
+# Cache AC1
+cache("AC1")
+
 # Move START and STOP to be columns per row to create a 'duration' variable showing times
 AC2 <- AC1 %>%
   pivot_wider(names_from = eventType, # These are what we would like to have as the column names in the wider-but-shorter dataframe
@@ -27,6 +30,9 @@ AC2$duration <- AC2$duration %>%
   as.numeric() %>%
   round(., digits = 2)
 
+# Cache AC2
+cache("AC2")
+
 # Create a data set of gpu for initial investigation grouped by hostname and arranged by timestamp
 GPU1 <- as_tibble(gpu) %>%
   group_by(hostname) %>%
@@ -39,28 +45,12 @@ GPU1$timestamp <- gsub("T", "", GPU1$timestamp) %>%
 # Convert timestamp column to date/time in local time zone
 GPU1$timestamp <- as_datetime(GPU1$timestamp, tz = "Europe/London")
 
+# Cache GPU1
+cache("GPU1")
+
 # Create a data set of tasks.x.y. for intial investigation
 XY1 <- as_tibble(task.x.y) %>%
   group_by(jobId)
 
-# Create separate columns for start and stop
-#AC2 <- filter(AC1$eventType, "START")
-
-# AC2 <- pivot_wider(AC1, )
-
-# Convert timestamp values to date/time
-# as_datetime(AC1$timestamp)
-
-
-# Create a new column in AC1 called "runtime"
-
-# Make data sets comparable
-# Join between enrolments and archetype_survey_response on learner_id
-# More info on joins: https://dplyr.tidyverse.org/reference/mutate-joins.html 
-#joint_full <- left_join(FL1, full_archetypes, by = "learner_id", archetype)
-
-#Filter by total render
-
-# calculate duration of render
-
-# Look at performance of gpus? does this need to happen on a task basis?
+# Cache XY1
+cache("XY1")
