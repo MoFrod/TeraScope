@@ -1,7 +1,7 @@
 ---
 title: "CSC8634_TeraScope Report"
 author: "Morgan Frodsham (210431461)"
-date: "10/02/2022"
+date: "11/02/2022"
 output: pdf_document
 citation_package: natbib
 bibliography: "references.bib"
@@ -21,25 +21,25 @@ load.project()
 
 # Extended Technical Project: Performance Evaluation of Terapixel Rendering in Cloud (Super)computing
 
-## Conext
+## Context
 
 ### Background 
 
-This report details the process and findings of an extended technical project on Newcastle University's cloud supercomputer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
+This report details the process and findings of an extended technical project on Newcastle University's cloud (super)computer architecture for visualising environmental data captured by the Newcastle Urban Observatory. It explores the data created during the computational production of [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) visualisation of Newcastle upon Tyne. Newcastle University and the Newcastle Urban Observatory started this initiative with the idea that "the only way to understand how to monitor a city is to try and monitor one" with a monitoring platform that matches "the scale, complexity and scope of our modern cities" (@UO). It offers an unparalleled opportunity to improve decision making the city by accurately measuring and analysing our urban environment. 
 
 ### Objectives and success criteria 
 
-Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO) in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels (@Terascope). Terapixels are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The terapixel visualisation created by Newcastle University's cloud supercomputer allows the viewer to "zoom in from an overview of just one square kilometre of the city... to see detail within a single room in an office or a house" (@Terapixel).
+Urban Observatories attempt to replicate the "breadth, longevity and success of astronomical observatories"(@UO) in understanding how cities operate. Funded in partnership with the UK Collabatorium for Research in Infrastructure and Cities (@UKCRIC), the Newcastle Urban Observatory collects environmental data about the city of Newcastle-upon-Tyne (@NUO). This is considered to be the most expansive set of "environmental data in the UK, with: over 74 urban indicators; 7,000 observations every minute; 3,600 sensor streams; 9 billion data points; 540 CCTV sensors; and hundreds of millions of images" (@Parliament). Newcastle University has created a scalable cloud supercomputer software architecture for visualising this data as realistic terapixels (@Terascope). Terapixels are images containing over one trillion pixels (@Terapixel) that allow viewers to interactively browse big data in intense detail across multiple scales (@Terascope). The terapixel visualisation created by Newcastle University's cloud (super)computer allows the viewer to "zoom in from an overview of just one square kilometre of the city... to see detail within a single room in an office or a house" (@Terapixel).
 
 In delivering this initative, Newcastle University had three objectives:
 
-1. "create a supercomputer architecture for scalable viualisation using the public cloud;
+1. "create a (super)computer architecture for scalable viualisation using the public cloud;
 
 2. produce a terapixel 3D city viusalisation supporting daily updates; and 
 
-3. undertake a rigorous evaluation of cloud supercomputing for compute intensive visualisation applications" (@Terascope).
+3. undertake a rigorous evaluation of cloud (super)computing for compute intensive visualisation applications" (@Terascope).
 
-This extended technical project focuses on the third objective. It explores three datasets created from the data produced by the supercomputer architecture during the creation of the terapixel visualisation, and aims to provide useful insights into the computational performance. The process and findings of this report explore the question: "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project is to identify useful insights about the stages of terapixel computation which are most resource intensive. Developing a better understanding of this is important as producing a high quality terapixel image is an intense process with significant computational costs (resource, energy, environmental and monetary) (@Terapixel). 
+This extended technical project focuses on the third objective. It explores three datasets created from the data produced by the (super)computer during the creation of the terapixel visualisation, and aims to provide useful insights into the computational performance. The process and findings of this report explore the question: "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project is to identify useful insights about the stages of terapixel computation which are most resource intensive. Developing a better understanding of this is important as producing a high quality terapixel image is an intense process with significant computational costs (resource, energy, environmental and monetary) (@Terapixel). 
 
 With a growing focus on doing "more with less" (@Google), cloud computing suppliers and users are trying to continue scaling with fewer computational costs (such as fewer servers and less energy). For humankind to fully reap the benefits of information provided by these visualisations, the computation needs to be efficient and associated costs must be sustainable. Improving the efficiency cloud computing has been a core focus for suppliers and users; indeed, Google returns 90.9 million results for "cloud computing efficiency". As the likelihood and potential impact of climate change is fully realised, users as well as wider society are increasingly concerned about the sustainability of digital technologies, such as cloud computing. Just five organisations - Amazon, Google, Microsoft, Facebook and Apple - use as much electricity annually as New Zealand (@FT). Moreover, the Shift Project suggests that tech-related emissions are rising by 6 per cent annually (@FT). Data centres are estimated to account for "1% of the total global energy demand" (@Environmental). Investigating the resource intensity of computing intensive visualisation applications, such as terapixels, is therefore a vital component of a rigorous evaluation and a necessary step towards greater sustainability. 
 
@@ -77,15 +77,11 @@ R packages used by this report are listed in the section below.
 
 - all written documentation is created with the R package, RMarkdown; and
 
-- natbib is an R package used for the bibliography
+- natbib is an R package used for the bibliography.
 
-- Git, which is software for tracking changes in any set of files, usually used for coordinating work among
-programmers collaboratively developing source code. GitHub is a provider of internet hosting for
-software development and version control using Git. Git Bash is an application for Microsoft Windows
-environments which provides an emulation layer for a Git command line experience.
+- Git, which is software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code. GitHub is a provider of internet hosting for software development and version control using Git. Git Bash is an application for Microsoft Windows environments which provides an emulation layer for a Git command line experience.
 
-- CRISP-DM (Chapman et. al. and Wirth (2000)) is the methodology used to deliver data workflow
-best practice;
+- CRISP-DM (@CRISP-DM) is the methodology used to deliver data workflow best practice.
 
 ## Data Understanding
 
@@ -181,7 +177,7 @@ To investigate the duration of each event, a box plot was created of AC2 with ev
 
 ```{R duration, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot duration of eventName
-ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration of Event (seconds)", title = "Boxplot of Duration of Event by Name of Event") + theme(legend.position = "none") + expand_limits(y = 0)
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration of Event (seconds)", title = "Plot 1: Duration of Event by Name of Event") + theme(legend.position = "none") + expand_limits(y = 0)
 ```
 
 The plot above highlights that 'TotalRender' has the longest duration. It is assumed that this is because it includes the duration of all the other events.
@@ -194,10 +190,12 @@ AC3 <- AC2 %>%
   filter(eventName != "TotalRender")
 
 # Plot duration of eventName activities without total render
-ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration of Event (seconds)", title = "Boxplot of Duration of Event by Name of Event without TotalRender") + theme(legend.position = "none") + expand_limits(y = 0)
+ggplot(AC3, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration of Event (seconds)", title = "Plot 2: Duration of Event by Name of Event without TotalRender") + theme(legend.position = "none") + expand_limits(y = 0)
 ```
 
 It is clear that 'Render' has the longest duration, and therefore is the event that dominates the run time. This is to be expected; rendering visualisations is considered to be a good test of hardware performance as it is capable of absorbing all available compute resource (@Terapixel).  It is also interesting to note that 'Saving Config' and 'Tiling' take close to zero seconds to execute.
+
+The virtual machines with the longest duration for 'Render' are listed in the table below.
 
 ```{R longestrender, echo = FALSE, results = 'asis'}
 # Which hosts have the longest Render time?
@@ -222,7 +220,7 @@ Further exploration related to this data goal can be viewed in 'eda1.R'.
 
 **Goal 2 (Power draw)**
 
-To identify the power needed for duration time, the application.checkpoints and gpu data were combined. This could be achieved by either 'timestamp' or 'hostname' as they are the common values across both data sets. Joining by hostname was unlikely to provide us with the desired result as hostnames appeared more than once in both data sets. However, there are more timestamps in the gpu data set than the application.checkpoints data set; when the two are joined (Power_Duration2), we explore a subset of the data becase the timestamp is rounded to the nearest two second; this places limitations on our results.
+To identify the power needed for duration time, the application.checkpoints and gpu data were combined. This could be achieved by either 'timestamp' or 'hostname' as they are the common values across both data sets. Joining by hostname was unlikely to provide us with the desired result as hostnames appeared more than once in both data sets. However, there are more timestamps in the gpu data set than the application.checkpoints data set; when the two are joined (Power_Duration2), we explore a subset of the data becase the timestamp is rounded to the nearest two seconds; this places limitations on our results.
 
 ```{R Power_Duration2, echo=FALSE, message=FALSE, warning=FALSE}
 # Create a single data set with power usage and duration for every event other than total render
@@ -245,24 +243,28 @@ Power_Duration2 <- full_join(AC9, GPU2, by = c("timestamp", "hostname")) %>% # J
 cache("Power_Duration2") # Cache the new data set
 ```
 
-Initially, a box plot was created of event power draw by event name to see if there was an obvious correlation between duration and power draw.
+Initially, a box plot was created of event power draw by event name to see if there was an obvious correlation between duration and power consumption.
 
 ```{R EventPower, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot event name by power draw
-ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot(alpha = 0.3, color = "#33a02c") + labs(x = "Name of Event", y = "Power Draw of Event (watts)", title = "Boxplot of Power Draw of Event by Name of Event") + theme(legend.position = "none") + expand_limits(y = 0)
+ggplot(Power_Duration2, aes(x = eventName, y = powerDrawWatt)) + geom_boxplot(alpha = 0.3, color = "#33a02c") + labs(x = "Name of Event", y = "Power Draw of Event (watts)", title = "Plot 3: Power Draw of Event by Name of Event") + theme(legend.position = "none") + expand_limits(y = 0)
 ```
 
 It was a surprise that the events with the highest duration ('TotalRender' and 'Render') do not draw (consume) the most power. The events that consume the most power are 'Tiling' and 'Uploading'.
 
 To investigate further, Power_Duration2 was filtered to observe the power draw by duration for 'Tiling'. This was graphed in a scatter plot, coloured by 'jobId', and is presented below.
 
+\newpage
+
 ```{R TPowerDuration, echo = FALSE}
 # Plot hostname by power draw and duration of tiling
 Power_Duration2 %>%
   filter(eventName == "Tiling") %>%
-  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Tiling: Power Draw by Duration", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 2))
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Plot 4: Power Draw by Duration for Tiling", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 2))
 ```
 Given that there are two job IDs ('jobId') that correlate with 'Tiling', it is interesting to observe that most of the tiling occurs for the job ID of level 12 (1024-lvl12-7e026be3-5fd0-48ee-b7d1-abd61f747705). It is unclear if this is a problem caused from the data wrangling, or a true result in the data so further investigation is required. 
+
+\newpage
 
 Power_Duration2 was also filtered to see the power draw by duration for 'Uploading'. This was graphed in a scatter plot, coloured by 'jobId', and is presented below.
 
@@ -270,10 +272,12 @@ Power_Duration2 was also filtered to see the power draw by duration for 'Uploadi
 # Plot hostname by power draw and duration of uploading
 Power_Duration2 %>%
   filter(eventName == "Uploading") %>%
-  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Uploading: Power Draw by Duration", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 2))
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Plot 5: Power Draw by Duration for Uploading", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 2))
 ```
 
 The same pattern is observed in 'Uploading' as for 'Tiling', where there is only power draw and duration data for two job IDs (level 8 and 12). Interestingly, here there are also two distinct groups for the duration of 'Uploading', and both groups split in their consumption of power (excluding some outliers, it appears almost that the software is testing the power needed for each task). This would benefit from further exploration.
+
+\newpage
 
 For comparison, Power_Duration2 was filtered to see the power draw by duration for 'TotalRender'. This was graphed in a scatter plot, coloured by 'jobId', and is presented below.
 
@@ -281,10 +285,12 @@ For comparison, Power_Duration2 was filtered to see the power draw by duration f
 # Plot hostname by power draw and duration of total render
 Power_Duration2 %>%
   filter(eventName == "TotalRender") %>%
-  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "TotalRender: Power Draw by Duration", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 3))
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Duration (seconds)", y = "Power Draw (watts)", title = "Plot 6: Power Draw by Duration for TotalRender", color = "Job ID") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 3))
 ```
 
 There are three job IDs visible in the scatter plot for 'TotalRender', although data for level 4 (1024-lvl4-90b0c947-dcfc-4eea-a1ee-efe843b698df) only appears once. It also seems that there are three groups for duration, but no group divide in power consumption. Tasking software or algorithm efficiency could account for why there are three distinct groups in the scatter plot for 'TotalRender' as more time intensive tasks could be allocated to specific virtual machines. 
+
+\newpage
 
 To better understand whether there is any observable pattern, the mean, standard deviation and coefficient of variation for the power draw and duration of each virtual machine ('hostname') was calculated. 
 
@@ -313,16 +319,18 @@ These values are combined into a single data set and visualised with the scatter
 ```{R HostPowerDuration, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot average power draw by average duration for each hostname
 Power_Duration %>%
-  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter", color = "#33a02c") + geom_smooth(color = "#525252") + labs(x = "Average Duration (seconds)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Duration per Hostname") + expand_limits(y = 80)
+  ggplot(aes(x = av_duration, y = av_power)) + geom_point(position = "jitter", color = "#33a02c") + geom_smooth(color = "#525252") + labs(x = "Average Duration (seconds)", y = "Average Power Draw (watts)", title = "Plot 7: Average Power Draw by Average Duration per Hostname") + expand_limits(y = 80)
 ```
 
 It does appear that there are two clear groups of virtual machines, but it is not clear why. Further investigation is required.
+
+Further exploration related to this data goal can be viewed in 'eda2.R'.
 
 \newpage
 
 **Goal 3 (Performance)**
 
-To understand the relationship between GPU power draw and performance, the impact of GPU temperature, core utilisation and memory demand on GPU power needed to be determined. The mean, standard deviation and coefficient of variation are calculated for all GPU card metrics.
+To understand the relationship between GPU power draw and performance, the impact of GPU temperature, core utilisation and memory demand on power consumption needed to be determined. The mean, standard deviation and coefficient of variation are calculated for all GPU card metrics.
 
 ```{R P_stat, echo = FALSE}
 # What is the mean, standard deviation and coefficient of variation for all GPU metrics by host
@@ -332,12 +340,12 @@ Performance <- GPU1 %>%
   mutate(CoV_p = (sd_power/av_power)*100, CoV_t = (sd_temp/av_temp)*100, CoV_u = (sd_util/av_util)*100, CoV_m = (sd_mem/av_mem)*100) # New column with coefficient of variation
 ```
 
-The graph below visualises the average power draw by average temperature of each virtual machine and, therefore, each GPU card (as it was previously demonstrated that each virtual machine appears to have its own unique GPU card). The temperature of the virtual machine has a lower variation when the dot is darkest.
+The graph below visualises the average power draw by average temperature of each virtual machine and, therefore, each GPU card (as it was previously demonstrated that each virtual machine appears to have a unique one). The temperature of the virtual machine has a lower variation when the dot is darkest.
 
 ```{R temp.power, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot power by temperature
 Performance %>%
-  ggplot(aes(x = av_temp, y = av_power, color = CoV_t)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Temperature (celcius)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Temperature per Hostname", color = "Temperature Variation") # Temperature is loosely correlated to power; temperature seems to increase as you use more power
+  ggplot(aes(x = av_temp, y = av_power, color = CoV_t)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Temperature (celcius)", y = "Average Power Draw (watts)", title = "Plot 8: Average Power Draw by Average Temperature per Hostname", color = "Temperature Variation") # Temperature is loosely correlated to power; temperature seems to increase as you use more power
 ```
 
 Temperature and power draw appear to be loosely coupled; it is not obvious that there is a strong relationship between these two metrics of performance. However, it does seem that the temperature of the virtual machine machine, on average, increases as more power is consumed. 
@@ -349,7 +357,7 @@ The graph below visualises the average power draw by average core utilisation of
 ```{R util.power, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot power by util
 Performance %>%
-  ggplot(aes(x = av_util, y = av_power, color = CoV_u)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Utilisation (percentage)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Core Utilisation per Hostname", color = "Utilisation Variation")
+  ggplot(aes(x = av_util, y = av_power, color = CoV_u)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Utilisation (percentage)", y = "Average Power Draw (watts)", title = "Plot 9: Average Power Draw by Average Core Utilisation per Hostname", color = "Utilisation Variation")
 ```
 
 GPU core utilisation and power draw appear to be loosely coupled; it is not obvious that there is a strong relationship between these two metrics of performance. However, it does seem that more power is consumed, on average, as the GPU core utilisation increases.  
@@ -358,12 +366,12 @@ In this scatter plot we begin to observe two groups emerge in the virtual machin
 
 \newpage 
 
-The graph below visualises the average power draw by average memory use of the GPU card from each virtual machine. The memory demand the GPU card varies less when the dot is darkest.
+The graph below visualises the average power draw by average memory use of the GPU card from each virtual machine. The memory demand of the GPU card varies less when the dot is darkest.
 
 ```{R mem.temp, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot power by mem
 Performance %>%
-  ggplot(aes(x = av_mem, y = av_power, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Power Draw (watts)", title = "Average Power Draw by Average Memory Usage per Hostname", color = "Memory Variation") # Power use generally increases as more gpu memory is used - you see a clear divide into two groups here.
+  ggplot(aes(x = av_mem, y = av_power, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Power Draw (watts)", title = "Plot 10: Average Power Draw by Average Memory Usage per Hostname", color = "Memory Variation") # Power use generally increases as more gpu memory is used - you see a clear divide into two groups here.
 ```
 
 GPU memory use and power draw appear to be loosely coupled; it is not obvious that there is a strong relationship between these two metrics of performance. However, it does seem that the more memory used by the GPU, on average, the more power is consumed.
@@ -372,14 +380,16 @@ In this scatter plot we observe two obvious groups between the virtual machines'
 
 \newpage 
 
-The graph below visualises the average GPU core utilisation by average memory use of the GPU card from each virtual machine. The memory demand the GPU card varies less when the dot is darkest.
+The graph below visualises the average GPU core utilisation by average memory use of the GPU card from each virtual machine. The memory demand of the GPU card varies less when the dot is darkest.
 
 ```{R mem.util, echo=FALSE, message=FALSE, warning=FALSE}
 # Plot mem by util
 Performance %>%
-  ggplot(aes(x = av_mem, y = av_util, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Utilisation (percentage)", title = "Average Utilisation by Average Memory Usage per Hostname", color = "Memory Variation") # Very clear trajectory of more memory corresponds to utilising  more gpu core
+  ggplot(aes(x = av_mem, y = av_util, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Utilisation (percentage)", title = "Plot 11: Average Utilisation by Average Memory Usage per Hostname", color = "Memory Variation") # Very clear trajectory of more memory corresponds to utilising  more gpu core
 ```
 The average utilisation of the GPU core and average memory consumption appear to be tightly coupled; there appears to be a strong relationship between these two metrics of GPU performance. It does seem that, on average, the more GPU memory that is required, the more the GPU core is utilised. This is to be expected as increasing the memory demand will increase the load on the GPU core, requiring more of it to be utilised. 
+
+Further exploration related to this data goal can be viewed in 'eda3.R'.
 
 \newpage
 
@@ -387,11 +397,11 @@ The average utilisation of the GPU core and average memory consumption appear to
 
 ### Objectives and success criteria
 
-This extended technical project explores "How could the computation of a terapixel visualisation be more efficient?"to identify useful insights about the stages of terapixel computation which are most resource intensive. An iniitail investigation into the three data sets provided by Newcastle University suggests that rending the visualisation is most time intensive, but that tiling and uploading the visualisation is most power intensive. GPU performance also appears to be loosely correlated with power consumption. However, usilisation of the gPU core and memory consumption appear to be tightly correlated. A better understanding of what is driving the duration of the visualisation and the relationship of GPU cards performance is needed to identify useful insights. 
+This extended technical project explores "How could the computation of a terapixel visualisation be more efficient?" to identify useful insights about the stages of terapixel computation which are most resource intensive. An initial investigation into the three data sets provided by Newcastle University suggests that rending the visualisation is the most time intensive, but that tiling and uploading the visualisation is the most power intensive. GPU performance also appears to be loosely correlated with power consumption. However, usilisation of the GPU core and memory consumption appear to be tightly correlated. A better understanding of what is driving the duration of the visualisation and the relationship of GPU cards performance is needed. 
 
 ### Data mining goals and success criteria
 
-To better understand the resource intensity of rendering a terapixel, the three data sets need to be explored as one whole picture. This will enable us to investigate what about the visualisation is driving the resource intensity and whether there are indicators of hardware issues that warrent further investigation. This second iteration of data mining aims to determine:
+To better understand the resource intensity of computing a terapixel, the three data sets need to be explored as one whole picture. This will enable us to investigate what about the visualisation is driving the resource intensity and whether there are indicators of hardware issues that warrent further investigation. This second iteration of data mining aims to determine:
 
 4. What is the variation in computation requirements for particular tiles? The data mining success criteria is identifying if there is a variation in computing requirements to determine which tiles are most intensive to produce. 
 
@@ -407,7 +417,7 @@ The details of data collection, description and quality outlined in the first it
 
 **Goal 4 (Tile computation)**
 
-There is a significant amount of variation across the power consumption and render duration for each virtual machine ('hostname'). To better understand why this might be occurring, a heat map was created from the x and y co-ordinates in task.x.y to identify if the intensity of the visualisation accounts for the variation in resource demand.
+There is a significant amount of variation across the power consumption and render duration for each virtual machine ('hostname'). To better understand why this might be occurring, a heat map was created from the x and y co-ordinates in task.x.y to identify if the intensity of the visualisation accounts for the variation in resource demand. The y co-ordinates needed to be inversed to match the heat map to the terapixel visual key. 
 
 ```{R heatmap, echo = FALSE}
 # Create a heatmap co-ordinates from XY1 with colour as Total Render time
@@ -416,12 +426,14 @@ T1 <- AC7[, c("taskId", "duration")] # Create new tibble with taskId and duratio
 TR2 <- left_join(T1, XY1, by = "taskId") # Join together T1 and XY1
 
 TR2 %>%
-  ggplot(aes(x = x, y = -y, fill = duration)) + geom_tile() + labs(x = "X", y = "-Y", title = "Heat Map Visualisation of Task Duration", fill = "Seconds") + theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(), axis.ticks.y = element_blank(), axis.text.y = element_blank()) # Surfaces with intense texture take more time to render, for example stadium seats and roofs with different surfaces such as satellites. 
+  ggplot(aes(x = x, y = -y, fill = duration)) + geom_tile() + labs(x = "X", y = "-Y", title = "Plot 12: Heat Map Visualisation of Task Duration", fill = "Seconds") + theme(axis.ticks.x = element_blank(), axis.text.x = element_blank(), axis.ticks.y = element_blank(), axis.text.y = element_blank()) # Surfaces with intense texture take more time to render, for example stadium seats and roofs with different surfaces such as satellites. 
 ```
 
-As mentioned in the background section of this report, rendering the visualisation in these tile coordinates ultimately generates [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) terapixel. 
+As previously mentioned, rendering the visualisation in these tile coordinates ultimately generates [this](http://terapixel.wasabi.1024.s3.eu-central-1.wasabisys.com/vtour/index.html) terapixel. 
 
 The heat map suggests that the more textured the content of the visualiation, the longer the visualisation takes to render. The tiles with the longest duration appear to be the more patterned edge of the stadium (perhaps seating), trees (with leaves), and roofs with more texture (such as satellites). 
+
+\newpage
 
 **Goal 5 (GPU serials)**
 
@@ -462,7 +474,7 @@ As it has been identified that the GPU core utilisation and memory use divides t
 
 The process and findings of this report explore the question "How could the computation of a terapixel visualisation be more efficient?". The success criteria of the project was to identify useful insights about the stages of terapixel computation which are most resource intensive. The following results have been identified:
 
-1. Run time (duration) of events in the creation of a terapixel is dominated by rendering (eventName 'Render'). The five virtual machines with the longest duration have been identified. 
+1. Run time (duration) of events in the creation of a terapixel is dominated by rendering the visualisation (eventName 'Render'). The five virtual machines with the longest duration have been identified. 
 
 2. The most power is consumed by 'Tiling' and 'Uploading' the terapixel. We also learnt that there are only two levels ('jobIds') for these events and that two distinct groups emerge between the virtual machines in the time it takes for the terapixel to be uploaded ('Uploading') as well as totally rendered ('TotalRender').
 
@@ -474,13 +486,13 @@ The process and findings of this report explore the question "How could the comp
 
 The findings of the exploratory analysis in this extended technical report does produce useful insights. These results offer insights into how the computation process could be improved; run time, power consumption, GPU core utilisation and GPU memory demand are indicators of resource intensity (@Terapixel, @Benchmarking). Time, power and hardware demands increase the monetary and environmental costs of cloud computing (@Microsoft, @Google, @FT). It is vital that we understand what drives the demand for, and intensity of, these resources in order to realise a technologically sustainable future. 
 
-This project has been limited by the time available, programming capabilities, and focus on data exploration instead of dashboard or model creation. The process has been sufficiently effective to somewhat address the objective and success criteria of this extended technical project. If the extended technical project was continued, the possible actions to better understand the results identified in this report could include:
+This project has been limited by the time available, programming capabilities, and focus on data exploration instead of dashboard or model creation. The process has been sufficiently effective to somewhat address the objective and success criteria of this extended technical project. If the extended technical project was continued, it would benefit from more rigerous statistical analysis. Possible actions to better understand the results identified in this report could also include:
 
 - identifying why there are only two jobIDs (visualisation levels) for 'Tiling' and 'Uploading'; 
 
 - determine why 'TotalRender' and 'Uploading' have distinct groups for run time (duration) and power consumption, and whether this applies for other events in the creation of the terapixel;
 
-- determine why there are also distinct groups in the GPU core utilisation and memory usage to identify if it is the same as duration; 
+- determine why there are also distinct groups in the GPU core utilisation and memory usage to identify if it is the same driver as for the split groups of duration; 
 
 - explore why there is so much variation in the GPU performance measures of the virtual machine; and
 
@@ -492,7 +504,7 @@ This extended technical project was more enjoyable than previous projects in the
 
 I also found this project more frustrating, however, on a personal level. I have a full-time, high-profile and fast-paced job at the same time as this MSc and, due to a short-term increase in my workload, I was unable to spend more than 2 to 3 hours at a time on this project during evenings and weekends. This meant that I felt unable to immerse myself as deeply in the project as I would have liked. 
 
-Going forward in similar projects, I would like to focus more time and attention going beyond the exploratory analysis phase. For example, it may have been sufficient to not undertake a second iteration of data exploration and instead build a Shiny dashboard (which I would love to practice).
+Going forward in similar projects, I would like to conduct further statistical analysis and am looking forward to undertaking the statistics module in the second year of this MSc. In the meantime, I would also like to focus more time and attention going beyond the exploratory analysis phase. For example, it may have been sufficient to not undertake a second iteration of data exploration and instead build a Shiny dashboard (which I would love to practice). 
 
 \newpage
 

@@ -1,0 +1,137 @@
+commit d94e978b5190847d3deb4bfa4e1fed94cc059db0
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Thu Feb 10 22:29:30 2022 +0000
+
+    Finalised report, tidied code and RMarkdown files, and completed Part 2 (Abstract and Key Images)
+
+commit 3a37563c63079ac96884731e9d8c4bf3ac3c56bd
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Tue Feb 8 20:14:28 2022 +0000
+
+    Writing EDA into report, and continued data wrangling.
+
+commit 9ee42383bb7b45d1c8f5d308b44171edd59d5684
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Feb 7 23:29:32 2022 +0000
+
+    Writing about EDA in report and new EDA
+
+commit ca65940c5b5147d175f9eb87fbe1bcd7052db2f2
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Feb 7 21:57:33 2022 +0000
+
+    Writing up EDA in report and tidying code.
+
+commit 0dc2c1a7c7ed9e15409c550c6a6d85c8a4f1c350
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Thu Feb 3 20:17:14 2022 +0000
+
+    Continued adding to report and EDA.
+
+commit 1506d529edbcb3f7327283223be2d84a9a7eb5af
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Wed Feb 2 19:54:49 2022 +0000
+
+    Added to report, continued EDA. R Studio froze, resulting in a second report. Deleted older version.
+
+commit 521057f53efa4f9d9032c9c0863e2117ceecf611
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Tue Feb 1 20:41:47 2022 +0000
+
+    Wrote up EDA in report, updated munge file accordingly and added new reference.
+
+commit 48a73780effb8a74608888127d06818436efdc26
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Fri Jan 28 10:55:33 2022 +0000
+
+    EDA.
+
+commit 39754fe68bdaa3ae518e01c87f4cbc64be8d774f
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Wed Jan 26 20:03:32 2022 +0000
+
+    EDA
+
+commit d2a81cf668d2ee463ad2fd83c20f1bffec8987f3
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Sun Jan 23 10:25:13 2022 +0000
+
+    EDA, data wrangling and documenting progress in report.
+
+commit 7c537b49859d29d9e3680559b85cb10b28f592c5
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Thu Jan 20 21:01:16 2022 +0000
+
+    Continued building report and added references.
+
+commit 06eb14e7640ebd633f2ed3cafd234037c0475bcf
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Tue Jan 18 20:36:59 2022 +0000
+
+    Updated gitignore file, added to report, continued EDA and data wrangling.
+
+commit a5be0700802be84aac55c5b9c67905cdeaa66af9
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Jan 17 19:05:46 2022 +0000
+
+    EDA and data wrangling.
+
+commit ec183713b9eabe8d520ce3e044172f9e23f95d41
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Sun Jan 16 12:17:05 2022 +0000
+
+    EDA.
+
+commit cbd045f76772e63e7fc8e094177d0faa30e4b2ae
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Sun Jan 16 11:39:33 2022 +0000
+
+    EDA and data wrangling.
+
+commit e965e7f1b2358abb1e85e2ff8f7ca37e9aa5121b
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Sat Jan 15 13:18:09 2022 +0000
+
+    EDA and wrangling data.
+
+commit fb04eb393e773bbaeee896c2219af9093a0d1798
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Fri Jan 14 21:10:24 2022 +0000
+
+    EDA and data wrangling.
+
+commit 1af4b1ff13d8b527259615f086211f14a09b1333
+Author: MoFrod <93520121+MoFrod@users.noreply.github.com>
+Date:   Tue Jan 11 20:33:44 2022 +0000
+
+    Delete .RData
+
+commit 6b03cc1d0f37fd964bf5a7832606af0ffaeec497
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Tue Jan 11 20:29:57 2022 +0000
+
+    Updated gitignore to include Rdata.
+
+commit 81a157700c4c39f37f96c822ea3819dae4b03ece
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Tue Jan 11 20:27:42 2022 +0000
+
+    EDA, added content and references to report.
+
+commit a459cc1436f7c440f18fe0532097d31b05769b09
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Jan 10 20:15:10 2022 +0000
+
+    EDA and created report layout.
+
+commit 15448254e74c38ae4ce73c4263592ef761ac49ca
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Jan 10 18:43:51 2022 +0000
+
+    Set up gitignore for csv files and the data folder, and set up RMarkdown report.
+
+commit dcc1a0ce4589b109a4b71b603945ebed39b7c519
+Author: Morgan Frodsham <morgan@frodsham.net>
+Date:   Mon Jan 10 18:26:32 2022 +0000
+
+    Set up project.

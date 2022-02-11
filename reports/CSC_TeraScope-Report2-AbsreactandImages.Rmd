@@ -1,7 +1,7 @@
 ---
 title: "CSC8634_TeraScope Structured Abstract and Key Images"
 author: "Morgan Frodsham (210431461)"
-date: "10/02/2022"
+date: "11/02/2022"
 output: pdf_document
 ---
 
@@ -18,7 +18,7 @@ load.project()
 ## Structured Abstract
 *243 Words*
 
-**Context:** Newcastle University has built cloud (super)computer architecture for visualising environmental data captured by the Newcastle Urban Observatory as terapixels. For humankind to fully reap the benefits of the information provided by this technology, the computation needs to be efficient and associated costs must be sustainable.
+**Context:** Newcastle University has built a cloud (super)computer for visualising environmental data captured by the Newcastle Urban Observatory as terapixels. For humankind to fully reap the benefits of the information provided by this technology, the computation needs to be efficient and associated costs must be sustainable.
 
 **Objective:** This report explores the question: "How could the computation of a terapixel visualisation be more efficient?" to identify useful insights about computational performance, such as the stages of terapixel computation which are most resource intensive.
 
@@ -32,22 +32,17 @@ load.project()
 
 ### Image 1
 
-```{R TPowerDuration1, echo = FALSE}
-# Plot hostname by power draw and duration of total render
-Power_Duration2 %>%
-  filter(eventName == "TotalRender") %>%
-  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Rendering Duration (seconds)", y = "Power Consumption (watts)", title = "Rendering a Terapixel: Power Consumption by Duration", color = "Visualisation Level") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 3))
+```{R duration, echo=FALSE, message=FALSE, warning=FALSE}
+# Plot duration of eventName
+ggplot(AC2, aes(x = eventName, y = duration)) + geom_boxplot(alpha = 0.3, color = "#1f78b4") + labs(x = "Name of Event", y = "Duration of Event (seconds)", title = "Creating a Terapixel: Duration of Computation Events") + theme(legend.position = "none") + expand_limits(y = 0)
 ```
 
 ### Image 2
 
-```{R mem.util, echo=FALSE, message=FALSE, warning=FALSE}
-Performance <- GPU1 %>%
-  group_by(hostname) %>% # Group by hostname
-  summarise(av_power = mean(powerDrawWatt), sd_power = sd(powerDrawWatt), av_temp = mean(gpuTempC), sd_temp = sd(gpuTempC), av_util = mean(gpuUtilPerc), sd_util = sd(gpuUtilPerc), av_mem = mean(gpuMemUtilPerc), sd_mem = sd(gpuMemUtilPerc)) %>% # Calculate mean and standard deviation of power for each host.
-  mutate(CoV_p = (sd_power/av_power)*100, CoV_t = (sd_temp/av_temp)*100, CoV_u = (sd_util/av_util)*100, CoV_m = (sd_mem/av_mem)*100) # New column with coefficient of variation
-
-# Plot mem by util
-Performance %>%
-  ggplot(aes(x = av_mem, y = av_util, color = CoV_m)) + geom_point(position = "jitter") + geom_smooth(color = "#525252") + labs(x = "Average Memory (percentage)", y = "Average Core Utilisation (percentage)", title = "Virtual Machine GPU Core Utilisation by GPU Memory Demand", color = "Memory Variation") # Very clear trajectory of more memory corresponds to utilising  more gpu core
+```{R TPowerDuration1, echo = FALSE}
+# Plot hostname by power draw and duration of total render
+Power_Duration2 %>%
+  filter(eventName == "TotalRender") %>%
+  ggplot(aes(x = duration, y = powerDrawWatt, color = jobId)) + geom_point(position = "jitter") + labs(x = "Tile Computation Duration (seconds)", y = "Power Consumption (watts)", title = "Creating a Terapixel: Tile Computation Power Consumption by Duration", color = "Visualisation Level") + scale_color_brewer(palette = "Paired") + theme(legend.position = "bottom") + guides(color = guide_legend(nrow = 3))
 ```
+
